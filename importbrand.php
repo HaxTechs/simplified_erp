@@ -16,12 +16,12 @@
 	        	<label class="col-sm-1 control-label">: </label>
 				    <div class="col-sm-8">
 					    <!-- the avatar markup -->
-							<div id="kv-avatar-errors-1" class="center-block" style="display:none;"></div>							
+							<div id="kv-avatar-errors-1" class="center-block importbrand-error-container"></div>							
 					    <div class="kv-avatar center-block">					        
-					        <input type="file" class="form-control" id="brandfile" placeholder="Import Brand FIle" name="brandfile" class="file-loading" style="width:auto;"/>
+					        <input type="file" class="form-control file-loading importbrand-file-input" id="brandfile" placeholder="Import Brand FIle" name="brandfile"/>
 							
 					    </div>
-						<a href="assests/import/brand.xlsx" download>Sample file</a>
+						<a class="importbrand-sample-link" href="assests/import/brand.xlsx" download>Sample file</a>
 				      
 				    </div>
 	        	</div> <!-- /form-group-->	

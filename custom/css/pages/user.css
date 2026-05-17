@@ -1,0 +1,12 @@
+.page-user #manageUserTable th:first-child {
+  width: 10%;
+}
+
+.page-user #manageUserTable th:last-child {
+  width: 15%;
+}
+
+.page-user .user-modal-body {
+  max-height: 450px;
+  overflow: auto;
+}

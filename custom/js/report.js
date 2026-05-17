@@ -1,4 +1,6 @@
 $(document).ready(function() {
+	$("#navReport").addClass('active');
+
 	// order date picker
 	$("#startDate").datepicker();
 	// order date picker

@@ -8,6 +8,14 @@ if(isset($_SESSION['userId'])) {
 }
 
 $errors = array();
+$currentPage = basename($_SERVER['PHP_SELF'], '.php');
+$sharedCssFiles = array(
+	'custom/css/shared/variables.css',
+	'custom/css/shared/base.css',
+	'custom/css/shared/layout.css',
+	'custom/css/shared/components.css'
+);
+$pageCssFile = 'custom/css/pages/' . $currentPage . '.css';
 
 if($_POST) {		
 
@@ -72,8 +80,13 @@ if($_POST) {
 	<!-- font awesome -->
 	<link rel="stylesheet" href="assests/font-awesome/css/font-awesome.min.css">
 
-  <!-- custom css -->
-  <link rel="stylesheet" href="custom/css/custom.css">	
+  <!-- shared custom css -->
+  <?php foreach ($sharedCssFiles as $cssFile) { ?>
+  <link rel="stylesheet" href="<?php echo $cssFile; ?>">
+  <?php } ?>
+  <?php if (file_exists(__DIR__ . '/' . $pageCssFile)) { ?>
+  <link rel="stylesheet" href="<?php echo $pageCssFile; ?>">
+  <?php } ?>
 
   <!-- jquery -->
 	<script src="assests/jquery/jquery.min.js"></script>
@@ -84,11 +97,11 @@ if($_POST) {
   <!-- bootstrap js -->
 	<script src="assests/bootstrap/js/bootstrap.min.js"></script>
 </head>
-<body>
+<body class="page-<?php echo htmlspecialchars($currentPage, ENT_QUOTES, 'UTF-8'); ?>">
 	<div class="container">
 		<div class="row vertical">
 			<div class="col-md-5 col-md-offset-4">
-				<div class="panel panel-info">
+				<div class="panel panel-info login-panel">
 					<div class="panel-heading">
 						<h3 class="panel-title">Please Sign in</h3>
 					</div>

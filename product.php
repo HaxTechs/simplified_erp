@@ -17,21 +17,21 @@
 
 				<div class="remove-messages"></div>
 
-				<div class="div-action pull pull-right" style="padding-bottom:20px;">
+				<div class="div-action page-actions pull pull-right">
 					<button class="btn btn-default button1" data-toggle="modal" id="addProductModalBtn" data-target="#addProductModal"> <i class="glyphicon glyphicon-plus-sign"></i> Add Product </button>
 				</div> <!-- /div-action -->				
 				
-				<table class="table" id="manageProductTable">
+				<table class="table product-table" id="manageProductTable">
 					<thead>
 						<tr>
-							<th style="width:10%;">Photo</th>							
+							<th>Photo</th>							
 							<th>Product Name</th>
 							<th>Rate</th>							
 							<th>Quantity</th>
 							<th>Brand</th>
 							<th>Category</th>
 							<th>Status</th>
-							<th style="width:15%;">Options</th>
+							<th>Options</th>
 						</tr>
 					</thead>
 				</table>
@@ -54,7 +54,7 @@
 	        <h4 class="modal-title"><i class="fa fa-plus"></i> Add Product</h4>
 	      </div>
 
-	      <div class="modal-body" style="max-height:450px; overflow:auto;">
+	      <div class="modal-body product-modal-body">
 
 	      	<div id="add-product-messages"></div>
 
@@ -63,9 +63,9 @@
 	        	<label class="col-sm-1 control-label">: </label>
 				    <div class="col-sm-8">
 					    <!-- the avatar markup -->
-							<div id="kv-avatar-errors-1" class="center-block" style="display:none;"></div>							
+							<div id="kv-avatar-errors-1" class="center-block product-error-container"></div>							
 					    <div class="kv-avatar center-block">					        
-					        <input type="file" class="form-control" id="productImage" placeholder="Product Name" name="productImage" class="file-loading" style="width:auto;"/>
+					        <input type="file" class="form-control file-loading product-file-input" id="productImage" placeholder="Product Name" name="productImage"/>
 					    </div>
 				      
 				    </div>
@@ -167,7 +167,7 @@
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 	        <h4 class="modal-title"><i class="fa fa-edit"></i> Edit Product</h4>
 	      </div>
-	      <div class="modal-body" style="max-height:450px; overflow:auto;">
+	      <div class="modal-body product-modal-body">
 
 	      	<div class="div-loading">
 	      		<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
@@ -196,7 +196,7 @@
 			        	<label for="editProductImage" class="col-sm-3 control-label">Product Image: </label>
 			        	<label class="col-sm-1 control-label">: </label>
 						    <div class="col-sm-8">							    				   
-						      <img src="" id="getProductImage" class="thumbnail" style="width:250px; height:250px;" />
+						      <img src="" id="getProductImage" class="thumbnail product-image-preview" />
 						    </div>
 			        </div> <!-- /form-group-->	     	           	       
 				    	
@@ -205,9 +205,9 @@
 			        	<label class="col-sm-1 control-label">: </label>
 						    <div class="col-sm-8">
 							    <!-- the avatar markup -->
-									<div id="kv-avatar-errors-1" class="center-block" style="display:none;"></div>							
+									<div id="kv-avatar-errors-1" class="center-block product-error-container"></div>							
 							    <div class="kv-avatar center-block">					        
-							        <input type="file" class="form-control" id="editProductImage" placeholder="Product Name" name="editProductImage" class="file-loading" style="width:auto;"/>
+							        <input type="file" class="form-control file-loading product-file-input" id="editProductImage" placeholder="Product Name" name="editProductImage"/>
 							    </div>
 						      
 						    </div>

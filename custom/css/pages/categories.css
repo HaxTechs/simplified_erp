@@ -1,0 +1,7 @@
+.page-categories #manageCategoriesTable th:last-child {
+  width: 15%;
+}
+
+.page-categories .categories-modal-loading {
+  width: 50px;
+}

@@ -1,8 +1,21 @@
 <?php require_once 'php_action/core.php'; ?>
+<?php
+$isAdmin = isset($_SESSION['userId']) && (int) $_SESSION['userId'] === 1;
+$currentPage = basename($_SERVER['PHP_SELF'], '.php');
+$sharedCssFiles = array(
+	'custom/css/shared/variables.css',
+	'custom/css/shared/base.css',
+	'custom/css/shared/layout.css',
+	'custom/css/shared/components.css'
+);
+$pageCssFile = 'custom/css/pages/' . $currentPage . '.css';
+?>
 
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<title>Stock Management System</title>
 
@@ -13,8 +26,13 @@
 	<!-- font awesome -->
 	<link rel="stylesheet" href="assests/font-awesome/css/font-awesome.min.css">
 
-  <!-- custom css -->
-  <link rel="stylesheet" href="custom/css/custom.css">
+  <!-- shared custom css -->
+  <?php foreach ($sharedCssFiles as $cssFile) { ?>
+  <link rel="stylesheet" href="<?php echo $cssFile; ?>">
+  <?php } ?>
+  <?php if (file_exists(dirname(__DIR__) . '/' . $pageCssFile)) { ?>
+  <link rel="stylesheet" href="<?php echo $pageCssFile; ?>">
+  <?php } ?>
 
 	<!-- DataTables -->
   <link rel="stylesheet" href="assests/plugins/datatables/jquery.dataTables.min.css">
@@ -32,69 +50,147 @@
 	<script src="assests/bootstrap/js/bootstrap.min.js"></script>
 
 </head>
-<body>
+<body class="app-layout page-<?php echo htmlspecialchars($currentPage, ENT_QUOTES, 'UTF-8'); ?>">
+	<div class="app-shell">
+		<aside class="app-sidebar" id="appSidebar">
+			<div class="sidebar-brand">
+				<a class="sidebar-brand__link" href="dashboard.php">
+					<span class="sidebar-brand__mark">
+						<img src="logo.png" alt="Simple ERP logo">
+					</span>
+					<span class="sidebar-brand__text">
+						<strong>Simple ERP</strong>
+						<small>Admin workspace</small>
+					</span>
+				</a>
+			</div>
 
+			<div class="sidebar-nav">
+				<div class="sidebar-section">
+					<div class="sidebar-section__eyebrow">Overview</div>
+					<ul class="sidebar-menu">
+						<li id="navDashboard">
+							<a href="dashboard.php">
+								<i class="glyphicon glyphicon-list-alt"></i>
+								<span>Dashboard</span>
+							</a>
+						</li>
+					</ul>
+				</div>
 
-	<nav class="navbar navbar-default navbar-static-top">
-		<div class="container">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <!-- <a class="navbar-brand" href="#">Brand</a> -->
-	  <a class="navbar-brand" href="#" style="padding:0px;">
-                    <img src="logo.png" alt="">
-                </a>
-    </div>
+				<?php if ($isAdmin) { ?>
+				<div class="sidebar-section">
+					<div class="sidebar-section__eyebrow">Catalog</div>
+					<ul class="sidebar-menu">
+						<li id="navBrand">
+							<a href="brand.php">
+								<i class="glyphicon glyphicon-btc"></i>
+								<span>Brand</span>
+							</a>
+						</li>
+						<li id="navCategories">
+							<a href="categories.php">
+								<i class="glyphicon glyphicon-th-list"></i>
+								<span>Category</span>
+							</a>
+						</li>
+						<li id="navProduct">
+							<a href="product.php">
+								<i class="glyphicon glyphicon-ruble"></i>
+								<span>Product</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<?php } ?>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">      
+				<div class="sidebar-section">
+					<div class="sidebar-section__eyebrow sidebar-section__eyebrow--with-icon" id="navOrder">
+						<i class="glyphicon glyphicon-shopping-cart"></i>
+						<span>Orders</span>
+					</div>
+					<ul class="sidebar-menu sidebar-menu--nested">
+						<li id="topNavAddOrder">
+							<a href="orders.php?o=add">
+								<i class="glyphicon glyphicon-plus"></i>
+								<span>Add Orders</span>
+							</a>
+						</li>
+						<li id="topNavManageOrder">
+							<a href="orders.php?o=manord">
+								<i class="glyphicon glyphicon-edit"></i>
+								<span>Manage Orders</span>
+							</a>
+						</li>
+					</ul>
+				</div>
 
-      <ul class="nav navbar-nav navbar-right">        
+				<?php if ($isAdmin) { ?>
+				<div class="sidebar-section">
+					<div class="sidebar-section__eyebrow">Insights</div>
+					<ul class="sidebar-menu">
+						<li id="navReport">
+							<a href="report.php">
+								<i class="glyphicon glyphicon-stats"></i>
+								<span>Reports</span>
+							</a>
+						</li>
+						<li id="importbrand">
+							<a href="importbrand.php">
+								<i class="glyphicon glyphicon-import"></i>
+								<span>Import Brand</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<?php } ?>
 
-      	<li id="navDashboard"><a href="index.php"><i class="glyphicon glyphicon-list-alt"></i>  Dashboard</a></li>        
-        <?php if(isset($_SESSION['userId']) && $_SESSION['userId']==1) { ?>
-        <li id="navBrand"><a href="brand.php"><i class="glyphicon glyphicon-btc"></i>  Brand</a></li>        
-		<?php } ?>
-		<?php if(isset($_SESSION['userId']) && $_SESSION['userId']==1) { ?>
-        <li id="navCategories"><a href="categories.php"> <i class="glyphicon glyphicon-th-list"></i> Category</a></li>        
-		<?php } ?>
-		<?php if(isset($_SESSION['userId']) && $_SESSION['userId']==1) { ?>
-        <li id="navProduct"><a href="product.php"> <i class="glyphicon glyphicon-ruble"></i> Product </a></li> 
-		<?php } ?>
-		
-        <li class="dropdown" id="navOrder">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="glyphicon glyphicon-shopping-cart"></i> Orders <span class="caret"></span></a>
-          <ul class="dropdown-menu">            
-            <li id="topNavAddOrder"><a href="orders.php?o=add"> <i class="glyphicon glyphicon-plus"></i> Add Orders</a></li>            
-            <li id="topNavManageOrder"><a href="orders.php?o=manord"> <i class="glyphicon glyphicon-edit"></i> Manage Orders</a></li>            
-          </ul>
-        </li> 
-		
-		<?php  if(isset($_SESSION['userId']) && $_SESSION['userId']==1) { ?>
-        <li id="navReport"><a href="report.php"> <i class="glyphicon glyphicon-check"></i> Report </a></li>
-		<?php } ?> 
-    <?php  if(isset($_SESSION['userId']) && $_SESSION['userId']==1) { ?>
-        <li id="importbrand"><a href="importbrand.php"> <i class="glyphicon glyphicon-check"></i> Import Brand </a></li>
-		<?php } ?>   
-        <li class="dropdown" id="navSetting">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="glyphicon glyphicon-user"></i> <span class="caret"></span></a>
-          <ul class="dropdown-menu">    
-			<?php if(isset($_SESSION['userId']) && $_SESSION['userId']==1) { ?>
-            <li id="topNavSetting"><a href="setting.php"> <i class="glyphicon glyphicon-wrench"></i> Setting</a></li>
-            <li id="topNavUser"><a href="user.php"> <i class="glyphicon glyphicon-wrench"></i> Add User</a></li>
-<?php } ?>              
-            <li id="topNavLogout"><a href="logout.php"> <i class="glyphicon glyphicon-log-out"></i> Logout</a></li>            
-          </ul>
-        </li>        
-           
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-	</nav>
+				<div class="sidebar-section sidebar-section--footer">
+					<div class="sidebar-section__eyebrow sidebar-section__eyebrow--with-icon" id="navSetting">
+						<i class="glyphicon glyphicon-user"></i>
+						<span>Account</span>
+					</div>
+					<ul class="sidebar-menu sidebar-menu--nested">
+						<?php if ($isAdmin) { ?>
+						<li id="topNavSetting">
+							<a href="setting.php">
+								<i class="glyphicon glyphicon-wrench"></i>
+								<span>Settings</span>
+							</a>
+						</li>
+						<li id="topNavUser">
+							<a href="user.php">
+								<i class="glyphicon glyphicon-briefcase"></i>
+								<span>Users</span>
+							</a>
+						</li>
+						<?php } ?>
+						<li id="topNavLogout">
+							<a href="logout.php">
+								<i class="glyphicon glyphicon-log-out"></i>
+								<span>Logout</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</aside>
 
-	<div class="container">
+		<div class="app-overlay" id="appOverlay"></div>
+
+		<div class="app-main">
+			<header class="app-topbar">
+				<button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+					<i class="fa fa-bars"></i>
+				</button>
+				<div class="app-topbar__title">
+					<h1>Stock Management System</h1>
+					<p>Modernized admin panel layout</p>
+				</div>
+				<a class="app-topbar__logout" href="logout.php">
+					<i class="glyphicon glyphicon-log-out"></i>
+					<span>Logout</span>
+				</a>
+			</header>
+
+			<main class="app-content">

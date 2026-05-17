@@ -1,0 +1,27 @@
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  background:
+    radial-gradient(circle at top, rgba(31, 111, 235, 0.12), transparent 28%),
+    linear-gradient(180deg, #f9fbff 0%, var(--app-bg) 100%);
+  color: var(--app-text);
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+a {
+  color: var(--app-accent);
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+a:hover,
+a:focus {
+  color: #1859be;
+  text-decoration: none;
+}
+
+.div-hide {
+  display: none;
+}

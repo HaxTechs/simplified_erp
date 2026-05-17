@@ -1,0 +1,26 @@
+.page-product #manageProductTable th:first-child {
+  width: 10%;
+}
+
+.page-product #manageProductTable th:last-child {
+  width: 15%;
+}
+
+.page-product .product-modal-body {
+  max-height: 450px;
+  overflow: auto;
+}
+
+.page-product .product-error-container {
+  display: none;
+}
+
+.page-product .product-file-input {
+  width: auto;
+}
+
+.page-product .product-image-preview {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+}

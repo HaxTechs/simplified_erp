@@ -1,0 +1,7 @@
+.page-brand #manageBrandTable th:last-child {
+  width: 15%;
+}
+
+.page-brand .brand-modal-loading {
+  width: 50px;
+}

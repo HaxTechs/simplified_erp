@@ -82,15 +82,15 @@ if($_GET['o'] == 'add') {
 			    </div>
 			  </div> <!--/form-group-->			  
 
-			  <table class="table" id="productTable">
+			  <table class="table orders-product-table" id="productTable">
 			  	<thead>
 			  		<tr>			  			
-			  			<th style="width:40%;">Product</th>
-			  			<th style="width:20%;">Rate</th>
-			  			<th style="width:10%;">Available Quantity</th>
-			  			<th style="width:15%;">Quantity</th>			  			
-			  			<th style="width:25%;">Total</th>			  			
-			  			<th style="width:10%;"></th>
+			  			<th>Product</th>
+			  			<th>Rate</th>
+			  			<th>Available Quantity</th>
+			  			<th>Quantity</th>			  			
+			  			<th>Total</th>			  			
+			  			<th></th>
 			  		</tr>
 			  	</thead>
 			  	<tbody>
@@ -98,7 +98,7 @@ if($_GET['o'] == 'add') {
 			  		$arrayNumber = 0;
 			  		for($x = 1; $x < 2; $x++) { ?>
 			  			<tr id="row<?php echo $x; ?>" class="<?php echo $arrayNumber; ?>">			  				
-			  				<td style="margin-left:20px;">
+			  				<td>
 			  					<div class="form-group">
 
 			  					<select class="form-control" name="productName[]" id="productName<?php echo $x; ?>" onchange="getProductData(<?php echo $x; ?>)" >
@@ -115,21 +115,21 @@ if($_GET['o'] == 'add') {
 		  						</select>
 			  					</div>
 			  				</td>
-			  				<td style="padding-left:20px;">			  					
+			  				<td>			  					
 			  					<input type="text" name="rate[]" id="rate<?php echo $x; ?>" autocomplete="off" disabled="true" class="form-control" />			  					
 			  					<input type="hidden" name="rateValue[]" id="rateValue<?php echo $x; ?>" autocomplete="off" class="form-control" />			  					
 			  				</td>
-							<td style="padding-left:20px;">
+							<td>
 			  					<div class="form-group">
 									<p id="available_quantity<?php echo $x; ?>"></p>
 			  					</div>
 			  				</td>
-			  				<td style="padding-left:20px;">
+			  				<td>
 			  					<div class="form-group">
 			  					<input type="number" name="quantity[]" id="quantity<?php echo $x; ?>" onkeyup="getTotal(<?php echo $x ?>)" autocomplete="off" class="form-control" min="1" />
 			  					</div>
 			  				</td>
-			  				<td style="padding-left:20px;">			  					
+			  				<td>			  					
 			  					<input type="text" name="total[]" id="total<?php echo $x; ?>" autocomplete="off" class="form-control" disabled="true" />			  					
 			  					<input type="hidden" name="totalValue[]" id="totalValue<?php echo $x; ?>" autocomplete="off" class="form-control" />			  					
 			  				</td>
@@ -300,15 +300,15 @@ if($_GET['o'] == 'add') {
 			    </div>
 			  </div> <!--/form-group-->			  
 
-			  <table class="table" id="productTable">
+			  <table class="table orders-product-table" id="productTable">
 			  	<thead>
 			  		<tr>			  			
-			  			<th style="width:40%;">Product</th>
-			  			<th style="width:20%;">Rate</th>
-			  			<th style="width:15%;">Available Quantity</th>			  			
-			  			<th style="width:15%;">Quantity</th>			  			
-			  			<th style="width:15%;">Total</th>			  			
-			  			<th style="width:10%;"></th>
+			  			<th>Product</th>
+			  			<th>Rate</th>
+			  			<th>Available Quantity</th>			  			
+			  			<th>Quantity</th>			  			
+			  			<th>Total</th>			  			
+			  			<th></th>
 			  		</tr>
 			  	</thead>
 			  	<tbody>
@@ -325,7 +325,7 @@ if($_GET['o'] == 'add') {
 			  		while($orderItemData = $orderItemResult->fetch_array()) { 
 			  			// print_r($orderItemData); ?>
 			  			<tr id="row<?php echo $x; ?>" class="<?php echo $arrayNumber; ?>">			  				
-			  				<td style="margin-left:20px;">
+			  				<td>
 			  					<div class="form-group">
 
 			  					<select class="form-control" name="productName[]" id="productName<?php echo $x; ?>" onchange="getProductData(<?php echo $x; ?>)" >
@@ -349,11 +349,11 @@ if($_GET['o'] == 'add') {
 		  						</select>
 			  					</div>
 			  				</td>
-			  				<td style="padding-left:20px;">			  					
+			  				<td>			  					
 			  					<input type="text" name="rate[]" id="rate<?php echo $x; ?>" autocomplete="off" disabled="true" class="form-control" value="<?php echo $orderItemData['rate']; ?>" />			  					
 			  					<input type="hidden" name="rateValue[]" id="rateValue<?php echo $x; ?>" autocomplete="off" class="form-control" value="<?php echo $orderItemData['rate']; ?>" />			  					
 			  				</td>
-							<td style="padding-left:20px;">
+							<td>
 			  					<div class="form-group">
 									<?php
 			  							$productSql = "SELECT * FROM product WHERE active = 1 AND status = 1 AND quantity != 0";
@@ -375,12 +375,12 @@ if($_GET['o'] == 'add') {
 									
 			  					</div>
 			  				</td>
-			  				<td style="padding-left:20px;">
+			  				<td>
 			  					<div class="form-group">
 			  					<input type="number" name="quantity[]" id="quantity<?php echo $x; ?>" onkeyup="getTotal(<?php echo $x ?>)" autocomplete="off" class="form-control" min="1" value="<?php echo $orderItemData['quantity']; ?>" />
 			  					</div>
 			  				</td>
-			  				<td style="padding-left:20px;">			  					
+			  				<td>			  					
 			  					<input type="text" name="total[]" id="total<?php echo $x; ?>" autocomplete="off" class="form-control" disabled="true" value="<?php echo $orderItemData['total']; ?>"/>			  					
 			  					<input type="hidden" name="totalValue[]" id="totalValue<?php echo $x; ?>" autocomplete="off" class="form-control" value="<?php echo $orderItemData['total']; ?>"/>			  					
 			  				</td>
@@ -535,7 +535,7 @@ if($_GET['o'] == 'add') {
         <h4 class="modal-title"><i class="glyphicon glyphicon-edit"></i> Edit Payment</h4>
       </div>      
 
-      <div class="modal-body form-horizontal" style="max-height:500px; overflow:auto;" >
+      <div class="modal-body form-horizontal payment-order-modal-body">
 
       	<div class="paymentOrderMessages"></div>
 

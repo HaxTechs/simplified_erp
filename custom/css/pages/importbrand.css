@@ -1,0 +1,13 @@
+.page-importbrand .importbrand-error-container {
+  display: none;
+}
+
+.page-importbrand .importbrand-file-input {
+  width: auto;
+}
+
+.page-importbrand .importbrand-sample-link {
+  display: inline-block;
+  margin-top: 8px;
+  font-weight: 600;
+}

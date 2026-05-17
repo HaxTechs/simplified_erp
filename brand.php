@@ -17,7 +17,7 @@
 
 				<div class="remove-messages"></div>
 
-				<div class="div-action pull pull-right" style="padding-bottom:20px;">
+				<div class="div-action page-actions pull pull-right">
 					<button class="btn btn-default button1" data-toggle="modal" data-target="#addBrandModel"> <i class="glyphicon glyphicon-plus-sign"></i> Add Brand </button>
 				</div> <!-- /div-action -->				
 				
@@ -26,7 +26,7 @@
 						<tr>							
 							<th>Brand Name</th>
 							<th>Status</th>
-							<th style="width:15%;">Options</th>
+							<th>Options</th>
 						</tr>
 					</thead>
 				</table>
@@ -100,7 +100,7 @@
 
 	      	<div id="edit-brand-messages"></div>
 
-	      	<div class="modal-loading div-hide" style="width:50px; margin:auto;padding-top:50px; padding-bottom:50px;">
+	      	<div class="modal-loading brand-modal-loading div-hide">
 						<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
 						<span class="sr-only">Loading...</span>
 					</div>

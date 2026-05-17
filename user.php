@@ -17,15 +17,15 @@
 
 				<div class="remove-messages"></div>
 
-				<div class="div-action pull pull-right" style="padding-bottom:20px;">
+				<div class="div-action page-actions pull pull-right">
 					<button class="btn btn-default button1" data-toggle="modal" id="addUserModalBtn" data-target="#addUserModal"> <i class="glyphicon glyphicon-plus-sign"></i> Add User </button>
 				</div> <!-- /div-action -->				
 				
 				<table class="table" id="manageUserTable">
 					<thead>
 						<tr>
-							<th style="width:10%;">User Name</th>
-							<th style="width:15%;">Options</th>
+							<th>User Name</th>
+							<th>Options</th>
 						</tr>
 					</thead>
 				</table>
@@ -48,7 +48,7 @@
 	        <h4 class="modal-title"><i class="fa fa-plus"></i> Add User</h4>
 	      </div>
 
-	      <div class="modal-body" style="max-height:450px; overflow:auto;">
+	      <div class="modal-body user-modal-body">
 
 	      	<div id="add-user-messages"></div>
 
@@ -101,7 +101,7 @@
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 	        <h4 class="modal-title"><i class="fa fa-edit"></i> Edit User</h4>
 	      </div>
-	      <div class="modal-body" style="max-height:450px; overflow:auto;">
+	      <div class="modal-body user-modal-body">
 
 	      	<div class="div-loading">
 	      		<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>

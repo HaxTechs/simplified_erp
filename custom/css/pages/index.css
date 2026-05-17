@@ -1,0 +1,24 @@
+.page-index .vertical {
+  padding-top: 150px;
+  padding-bottom: 150px;
+}
+
+.page-index .login-panel {
+  overflow: hidden;
+}
+
+.page-index .login-panel .panel-heading {
+  background: linear-gradient(135deg, #1f6feb 0%, #3ba4ff 100%);
+  color: #ffffff;
+}
+
+.page-index .login-panel .panel-title {
+  color: #ffffff;
+}
+
+@media (max-width: 767px) {
+  .page-index .vertical {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+}

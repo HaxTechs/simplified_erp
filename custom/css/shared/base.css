@@ -4,18 +4,54 @@ body {
 }
 
 body {
-  background:
-    radial-gradient(circle at top, rgba(31, 111, 235, 0.12), transparent 28%),
-    linear-gradient(180deg, #f9fbff 0%, var(--app-bg) 100%);
+  position: relative;
+  background: var(--app-bg);
   color: var(--app-text);
   font-family: "Helvetica Neue", Arial, sans-serif;
   transition: background 0.2s ease, color 0.2s ease;
+  isolation: isolate;
 }
 
-[data-theme="dark"] body {
-  background:
-    radial-gradient(circle at top, rgba(103, 166, 255, 0.16), transparent 28%),
-    linear-gradient(180deg, #08111f 0%, var(--app-bg) 100%);
+/* ─── Glow orbs via pseudo-elements, no extra markup ─── */
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+  filter: blur(90px);
+}
+
+/* Top-right orb — teal-blue */
+body::before {
+  width: 480px;
+  height: 480px;
+  top: -120px;
+  right: -100px;
+  background: #b8d8e8;
+  opacity: 0.5;
+}
+
+/* Bottom-left orb — sage green */
+body::after {
+  width: 380px;
+  height: 380px;
+  bottom: -100px;
+  left: -80px;
+  background: #c0d8c0;
+  opacity: 0.45;
+}
+
+[data-theme="dark"] body::before {
+  background: #1a5f7a;
+  opacity: 0.32;
+}
+
+[data-theme="dark"] body::after {
+  background: #1c5c3a;
+  opacity: 0.28;
 }
 
 a {
@@ -31,8 +67,8 @@ a:focus {
 
 .theme-transition,
 .theme-transition *,
-.theme-transition *:before,
-.theme-transition *:after {
+.theme-transition *::before,
+.theme-transition *::after {
   transition:
     background-color 0.2s ease,
     border-color 0.2s ease,

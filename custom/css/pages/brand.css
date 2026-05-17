@@ -5,3 +5,70 @@
 .page-brand .brand-modal-loading {
   width: 50px;
 }
+
+/* ─── Brand Page Table Styling (Light & Dark Mode) ─── */
+.page-brand .table > thead > tr > th {
+  background: var(--app-surface-soft);
+  color: var(--app-text-soft);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid var(--app-table-border);
+}
+
+.page-brand .table > tbody > tr {
+  transition: background-color 0.15s ease;
+}
+
+.page-brand .table > tbody > tr:hover {
+  background-color: rgba(26, 95, 122, 0.08);
+}
+
+[data-theme="dark"] .page-brand .table > tbody > tr:hover {
+  background-color: rgba(77, 166, 192, 0.08);
+}
+
+/* ─── Search and Filter Styling ─── */
+.page-brand .dataTables_filter input {
+  background: var(--app-surface);
+  color: var(--app-text);
+  border: 1px solid var(--app-input-border);
+  min-width: 250px;
+}
+
+.page-brand .dataTables_filter input::placeholder {
+  color: var(--app-text-soft);
+}
+
+.page-brand .dataTables_length select {
+  background: var(--app-surface);
+  color: var(--app-text);
+  border: 1px solid var(--app-input-border);
+}
+
+/* ─── Button Styling in Brand Page ─── */
+.page-brand .btn-default {
+  background: var(--app-button-default-bg);
+  color: var(--app-text);
+  border-color: var(--app-button-default-border);
+}
+
+.page-brand .btn-default:hover {
+  background: var(--app-button-hover-bg);
+  color: var(--app-text);
+}
+
+/* ─── Dropdown Menu Styling ─── */
+.page-brand .dropdown-menu > li > a {
+  color: var(--app-text);
+  transition: all 0.15s ease;
+}
+
+.page-brand .dropdown-menu > li > a:hover {
+  background-color: rgba(26, 95, 122, 0.1);
+  color: var(--app-accent);
+  padding-left: 24px;
+}
+
+[data-theme="dark"] .page-brand .dropdown-menu > li > a:hover {
+  background-color: rgba(77, 166, 192, 0.1);
+}

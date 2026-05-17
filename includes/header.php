@@ -16,6 +16,17 @@ $pageCssFile = 'custom/css/pages/' . $currentPage . '.css';
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script>
+		(function() {
+			try {
+				var savedTheme = window.localStorage.getItem('simpleErpTheme');
+				var theme = savedTheme === 'dark' ? 'dark' : 'light';
+				document.documentElement.setAttribute('data-theme', theme);
+			} catch (error) {
+				document.documentElement.setAttribute('data-theme', 'light');
+			}
+		})();
+	</script>
 
 	<title>Stock Management System</title>
 
@@ -187,10 +198,15 @@ $pageCssFile = 'custom/css/pages/' . $currentPage . '.css';
 					<h1>Stock Management System</h1>
 					<p>Modernized admin panel layout</p>
 				</div>
-				<a class="app-topbar__logout" href="logout.php">
-					<i class="glyphicon glyphicon-log-out"></i>
-					<span>Logout</span>
-				</a>
+				<div class="app-topbar__actions">
+					<button type="button" class="app-theme-toggle" id="themeToggle" aria-label="Switch to dark mode" title="Switch to dark mode">
+						<i class="fa fa-moon-o" id="themeToggleIcon"></i>
+					</button>
+					<a class="app-topbar__logout" href="logout.php">
+						<i class="glyphicon glyphicon-log-out"></i>
+						<span>Logout</span>
+					</a>
+				</div>
 			</header>
 
 			<main class="app-content">

@@ -8,15 +8,16 @@
   gap: 8px;
   margin-bottom: 18px;
   padding: 10px 14px;
-  background: rgba(255, 255, 255, 0.72);
+  background: var(--app-breadcrumb-bg);
   border: 1px solid rgba(219, 228, 240, 0.95);
+  border-color: var(--app-border);
   border-radius: 999px;
-  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.04);
+  box-shadow: var(--app-card-shadow);
 }
 
 .breadcrumb > li + li:before {
   padding: 0 8px 0 2px;
-  color: #8a97ab;
+  color: var(--app-breadcrumb-separator);
 }
 
 .page-heading,
@@ -27,8 +28,9 @@ h4 {
 
 .panel {
   border: 1px solid rgba(219, 228, 240, 0.9);
+  border-color: var(--app-border);
   border-radius: var(--app-radius-md);
-  box-shadow: var(--app-shadow);
+  box-shadow: var(--app-panel-shadow);
   overflow: hidden;
 }
 
@@ -36,13 +38,13 @@ h4 {
 .panel-info,
 .panel-success,
 .panel-danger {
-  border-color: rgba(219, 228, 240, 0.9);
+  border-color: var(--app-border);
 }
 
 .panel-heading {
   padding: 18px 22px;
-  border-bottom: 1px solid rgba(219, 228, 240, 0.85);
-  background: linear-gradient(180deg, #ffffff 0%, #f6f9fd 100%);
+  border-bottom: 1px solid var(--app-border);
+  background: var(--app-panel-heading-bg);
   color: var(--app-text);
 }
 
@@ -71,10 +73,10 @@ h4 {
 }
 
 .btn-default {
-  background: #ffffff;
-  border-color: #cfd8e6;
+  background: var(--app-button-default-bg);
+  border-color: var(--app-button-default-border);
   color: var(--app-text);
-  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
+  box-shadow: var(--app-card-shadow);
 }
 
 .btn-primary {
@@ -94,7 +96,7 @@ h4 {
 
 button.button1:hover,
 .btn:hover {
-  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.14);
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.2);
 }
 
 .badge {
@@ -108,8 +110,9 @@ button.button1:hover,
 }
 
 .table > thead > tr > th {
-  border-bottom: 1px solid #dbe4f0;
+  border-bottom: 1px solid var(--app-table-border);
   color: #51627c;
+  color: var(--app-text-soft);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -123,20 +126,21 @@ button.button1:hover,
 }
 
 .table > tbody > tr > td {
-  border-top-color: #ebf0f7;
+  border-top-color: var(--app-table-row-border);
 }
 
 .form-control {
   height: 42px;
-  border: 1px solid #d2dceb;
+  border: 1px solid var(--app-input-border);
   border-radius: 12px;
+  background: var(--app-surface);
   box-shadow: none;
   color: var(--app-text);
 }
 
 .form-control:focus {
-  border-color: #81aef6;
-  box-shadow: 0 0 0 4px rgba(31, 111, 235, 0.12);
+  border-color: var(--app-input-focus-border);
+  box-shadow: 0 0 0 4px var(--app-input-focus-ring);
 }
 
 textarea.form-control {
@@ -145,21 +149,22 @@ textarea.form-control {
 
 .modal-content {
   border: 0;
+  background: var(--app-surface);
   border-radius: 20px;
-  box-shadow: 0 28px 60px rgba(15, 23, 42, 0.18);
+  box-shadow: 0 28px 60px rgba(15, 23, 42, 0.28);
 }
 
 .modal-header,
 .modal-footer {
-  border-color: #e6edf7;
+  border-color: var(--app-muted-border);
 }
 
 .modal-header {
-  background: linear-gradient(180deg, #ffffff 0%, #f7faff 100%);
+  background: var(--app-modal-heading-bg);
 }
 
 .nav-tabs {
-  border-bottom-color: #dce5f2;
+  border-bottom-color: var(--app-table-border);
 }
 
 .nav-tabs > li > a {
@@ -171,7 +176,8 @@ textarea.form-control {
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
-  border-color: #dce5f2 #dce5f2 transparent;
+  border-color: var(--app-table-border) var(--app-table-border) transparent;
+  background: var(--app-surface);
   color: var(--app-accent);
 }
 

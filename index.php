@@ -71,6 +71,17 @@ if($_POST) {
 <!DOCTYPE html>
 <html>
 <head>
+	<script>
+		(function() {
+			try {
+				var savedTheme = window.localStorage.getItem('simpleErpTheme');
+				var theme = savedTheme === 'dark' ? 'dark' : 'light';
+				document.documentElement.setAttribute('data-theme', theme);
+			} catch (error) {
+				document.documentElement.setAttribute('data-theme', 'light');
+			}
+		})();
+	</script>
 	<title>Stock Management System</title>
 
 	<!-- bootstrap -->

@@ -74,7 +74,7 @@ $connect->close();
 	<div class="col-lg-4 col-sm-6">
 		<div class="dashboard-stat-card dashboard-stat-card--warning">
 			<span class="dashboard-card__label">Revenue</span>
-			<h2 class="dashboard-card__value">INR <?php echo number_format((float) $totalRevenue, 2); ?></h2>
+			<h2 class="dashboard-card__value">XOF <?php echo number_format((float) $totalRevenue, 2); ?></h2>
 			<span class="dashboard-card__meta">Total paid amount across orders</span>
 			<span class="dashboard-card__icon"><i class="glyphicon glyphicon-stats"></i></span>
 		</div>

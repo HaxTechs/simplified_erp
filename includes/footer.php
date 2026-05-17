@@ -15,9 +15,33 @@
 	<script>
 		(function($) {
 			var storageKey = 'simpleErpSidebarCollapsed';
+			var themeStorageKey = 'simpleErpTheme';
 			var $body = $('body');
 			var $toggle = $('#sidebarToggle');
 			var $overlay = $('#appOverlay');
+			var $themeToggle = $('#themeToggle');
+			var $themeIcon = $('#themeToggleIcon');
+
+			function applyTheme(theme) {
+				document.documentElement.setAttribute('data-theme', theme);
+
+				if (!$themeToggle.length) {
+					return;
+				}
+
+				var isDark = theme === 'dark';
+				$themeToggle.attr('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+				$themeToggle.attr('title', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+				$themeIcon.attr('class', isDark ? 'fa fa-sun-o' : 'fa fa-moon-o');
+			}
+
+			function readTheme() {
+				try {
+					return window.localStorage.getItem(themeStorageKey) === 'dark' ? 'dark' : 'light';
+				} catch (error) {
+					return 'light';
+				}
+			}
 
 			function persistCollapsedState(collapsed) {
 				try {
@@ -58,8 +82,24 @@
 				$body.removeClass('sidebar-open');
 			});
 
+			$themeToggle.on('click', function() {
+				var nextTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+				$body.addClass('theme-transition');
+				applyTheme(nextTheme);
+
+				try {
+					window.localStorage.setItem(themeStorageKey, nextTheme);
+				} catch (error) {
+				}
+
+				window.setTimeout(function() {
+					$body.removeClass('theme-transition');
+				}, 250);
+			});
+
 			$(window).on('resize', syncDesktopState);
 
+			applyTheme(readTheme());
 			syncDesktopState();
 		})(jQuery);
 	</script>

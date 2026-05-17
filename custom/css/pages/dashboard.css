@@ -117,6 +117,32 @@
   color: #ffffff;
 }
 
+[data-theme="dark"] .page-dashboard .dashboard-stat-card {
+  border-color: var(--app-border);
+  background: linear-gradient(180deg, #16223b 0%, #111a2e 100%);
+}
+
+[data-theme="dark"] .page-dashboard .dashboard-stat-card--primary {
+  background: linear-gradient(135deg, rgba(103, 166, 255, 0.18) 0%, #111a2e 100%);
+}
+
+[data-theme="dark"] .page-dashboard .dashboard-stat-card--success {
+  background: linear-gradient(135deg, rgba(29, 143, 109, 0.18) 0%, #111a2e 100%);
+}
+
+[data-theme="dark"] .page-dashboard .dashboard-stat-card--danger {
+  background: linear-gradient(135deg, rgba(207, 77, 93, 0.18) 0%, #111a2e 100%);
+}
+
+[data-theme="dark"] .page-dashboard .dashboard-stat-card--warning {
+  background: linear-gradient(135deg, rgba(200, 131, 16, 0.2) 0%, #111a2e 100%);
+}
+
+[data-theme="dark"] .page-dashboard .dashboard-card__icon {
+  background: rgba(103, 166, 255, 0.14);
+  color: #cfe2ff;
+}
+
 .page-dashboard .dashboard-user-orders th:first-child {
   width: 40%;
 }

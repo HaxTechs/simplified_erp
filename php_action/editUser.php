@@ -5,23 +5,26 @@ require_once 'core.php';
 $valid['success'] = array('success' => false, 'messages' => array());
 
 if($_POST) {
-	$edituserName = $_POST['edituserName'];
-	$editPassword 		= md5($_POST['editPassword']);
-	$userid 		= $_POST['userid'];
+    $edituserName = trim($_POST['edituserName']);
+    $editPassword = $_POST['editPassword'];
+    $userid = (int) $_POST['userid'];
 
-				
-	$sql = "UPDATE users SET username = '$edituserName', password = '$editPassword' WHERE user_id = $userid ";
+    $passwordHash = password_hash($editPassword, PASSWORD_DEFAULT);
 
-	if($connect->query($sql) === TRUE) {
-		$valid['success'] = true;
-		$valid['messages'] = "Successfully Update";	
-	} else {
-		$valid['success'] = false;
-		$valid['messages'] = "Error while updating product info";
-	}
+    $stmt = $connect->prepare("UPDATE users SET username = ?, password = ? WHERE user_id = ?");
+    $stmt->bind_param('ssi', $edituserName, $passwordHash, $userid);
 
-} // /$_POST
-	 
+    if($stmt->execute() === TRUE) {
+        $valid['success'] = true;
+        $valid['messages'] = "Successfully Updated";
+    } else {
+        $valid['success'] = false;
+        $valid['messages'] = "Error while updating user info";
+    }
+
+    $stmt->close();
+}
+
 $connect->close();
 
 echo json_encode($valid);

@@ -6,26 +6,26 @@ $valid['success'] = array('success' => false, 'messages' => array());
 
 if($_POST) {	
 
-	$userName 		= $_POST['userName'];
-  $upassword 			= md5($_POST['upassword']);
-  $uemail 			= $_POST['uemail'];
+	$userName = trim($_POST['userName']);
+	$upassword = $_POST['upassword'];
+	$uemail = trim($_POST['uemail']);
 
-	
-				$sql = "INSERT INTO users (username, password,email) 
-				VALUES ('$userName', '$upassword' , '$uemail')";
-				if($connect->query($sql) === TRUE) {
-					$valid['success'] = true;
-					$valid['messages'] = "Successfully Added";	
-				} else {
-					$valid['success'] = false;
-					$valid['messages'] = "Error while adding the members";
-				}
+	$passwordHash = password_hash($upassword, PASSWORD_DEFAULT);
 
-				// /else	
-		
-	} // if in_array 		
+	$stmt = $connect->prepare("INSERT INTO users (username, password, email) VALUES (?, ?, ?)");
+	$stmt->bind_param('sss', $userName, $passwordHash, $uemail);
 
-	$connect->close();
+	if($stmt->execute() === TRUE) {
+		$valid['success'] = true;
+		$valid['messages'] = "Successfully Added";	
+	} else {
+		$valid['success'] = false;
+		$valid['messages'] = "Error while adding the members";
+	}
+
+	$stmt->close();
+
+} // if in_array
 
 	echo json_encode($valid);
  

@@ -11,7 +11,7 @@ $errors = array();
 
 if($_POST) {		
 
-	$username = $_POST['username'];
+	$username = trim($_POST['username']);
 	$password = $_POST['password'];
 
 	if(empty($username) || empty($password)) {
@@ -23,32 +23,40 @@ if($_POST) {
 			$errors[] = "Password is required";
 		}
 	} else {
-		$sql = "SELECT * FROM users WHERE username = '$username'";
-		$result = $connect->query($sql);
+		$stmt = $connect->prepare("SELECT user_id, password FROM users WHERE username = ?");
+		$stmt->bind_param('s', $username);
+		$stmt->execute();
+		$stmt->store_result();
 
-		if($result->num_rows == 1) {
-			$password = md5($password);
-			// exists
-			$mainSql = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
-			$mainResult = $connect->query($mainSql);
+		if($stmt->num_rows == 1) {
+			$stmt->bind_result($user_id, $hashedPassword);
+			$stmt->fetch();
 
-			if($mainResult->num_rows == 1) {
-				$value = $mainResult->fetch_assoc();
-				$user_id = $value['user_id'];
+			$passwordValid = false;
+			if (password_verify($password, $hashedPassword)) {
+				$passwordValid = true;
+			} elseif (md5($password) === $hashedPassword) {
+				$passwordValid = true;
+				$rehash = password_hash($password, PASSWORD_DEFAULT);
+				$updateStmt = $connect->prepare("UPDATE users SET password = ? WHERE user_id = ?");
+				$updateStmt->bind_param('si', $rehash, $user_id);
+				$updateStmt->execute();
+				$updateStmt->close();
+			}
 
-				// set session
+			if ($passwordValid) {
 				$_SESSION['userId'] = $user_id;
-
-				header('location:'.$store_url.'dashboard.php');	
-			} else{
-				
+				header('location:'.$store_url.'dashboard.php');
+				exit;
+			} else {
 				$errors[] = "Incorrect username/password combination";
-			} // /else
-		} else {		
-			$errors[] = "Username doesnot exists";		
-		} // /else
-	} // /else not empty username // password
-	
+			}
+		} else {
+			$errors[] = "Username does not exist";
+		}
+
+		$stmt->close();
+	}
 } // /if $_POST
 ?>
 

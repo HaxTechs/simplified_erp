@@ -4,24 +4,26 @@ require_once 'core.php';
 
 if($_POST) {
 
-	$valid['success'] = array('success' => false, 'messages' => array());
+    $valid['success'] = array('success' => false, 'messages' => array());
 
-	$username = $_POST['username'];
-	$userId = $_POST['user_id'];
+    $username = trim($_POST['username']);
+    $userId = (int) $_POST['user_id'];
 
-	$sql = "UPDATE users SET username = '$username' WHERE user_id = {$userId}";
-	if($connect->query($sql) === TRUE) {
-		$valid['success'] = true;
-		$valid['messages'] = "Successfully Update";	
-	} else {
-		$valid['success'] = false;
-		$valid['messages'] = "Error while updating product info";
-	}
+    $stmt = $connect->prepare("UPDATE users SET username = ? WHERE user_id = ?");
+    $stmt->bind_param('si', $username, $userId);
 
-	$connect->close();
+    if($stmt->execute() === TRUE) {
+        $valid['success'] = true;
+        $valid['messages'] = "Successfully Updated";
+    } else {
+        $valid['success'] = false;
+        $valid['messages'] = "Error while updating username";
+    }
 
-	echo json_encode($valid);
+    $stmt->close();
+    $connect->close();
 
+    echo json_encode($valid);
 }
 
 ?>

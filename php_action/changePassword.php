@@ -4,44 +4,54 @@ require_once 'core.php';
 
 if($_POST) {
 
-	$valid['success'] = array('success' => false, 'messages' => array());
+    $valid['success'] = array('success' => false, 'messages' => array());
 
-	$currentPassword = md5($_POST['password']);
-	$newPassword = md5($_POST['npassword']);
-	$conformPassword = md5($_POST['cpassword']);
-	$userId = $_POST['user_id'];
+    $currentPassword = $_POST['password'];
+    $newPassword = $_POST['npassword'];
+    $confirmPassword = $_POST['cpassword'];
+    $userId = (int) $_POST['user_id'];
 
-	$sql ="SELECT * FROM users WHERE user_id = {$userId}";
-	$query = $connect->query($sql);
-	$result = $query->fetch_assoc();
+    $stmt = $connect->prepare("SELECT password FROM users WHERE user_id = ?");
+    $stmt->bind_param('i', $userId);
+    $stmt->execute();
+    $stmt->bind_result($hashedPassword);
+    $stmt->fetch();
+    $stmt->close();
 
-	if($currentPassword == $result['password']) {
+    $passwordValid = false;
+    if (password_verify($currentPassword, $hashedPassword)) {
+        $passwordValid = true;
+    } elseif (md5($currentPassword) === $hashedPassword) {
+        $passwordValid = true;
+    }
 
-		if($newPassword == $conformPassword) {
+    if ($passwordValid) {
+        if ($newPassword === $confirmPassword) {
+            $newHash = password_hash($newPassword, PASSWORD_DEFAULT);
+            $updateStmt = $connect->prepare("UPDATE users SET password = ? WHERE user_id = ?");
+            $updateStmt->bind_param('si', $newHash, $userId);
 
-			$updateSql = "UPDATE users SET password = '$newPassword' WHERE user_id = {$userId}";
-			if($connect->query($updateSql) === TRUE) {
-				$valid['success'] = true;
-				$valid['messages'] = "Successfully Updated";		
-			} else {
-				$valid['success'] = false;
-				$valid['messages'] = "Error while updating the password";	
-			}
+            if($updateStmt->execute() === TRUE) {
+                $valid['success'] = true;
+                $valid['messages'] = "Successfully Updated";
+            } else {
+                $valid['success'] = false;
+                $valid['messages'] = "Error while updating the password";
+            }
 
-		} else {
-			$valid['success'] = false;
-			$valid['messages'] = "New password does not match with Conform password";
-		}
+            $updateStmt->close();
+        } else {
+            $valid['success'] = false;
+            $valid['messages'] = "New password does not match with Confirm password";
+        }
+    } else {
+        $valid['success'] = false;
+        $valid['messages'] = "Current password is incorrect";
+    }
 
-	} else {
-		$valid['success'] = false;
-		$valid['messages'] = "Current password is incorrect";
-	}
+    $connect->close();
 
-	$connect->close();
-
-	echo json_encode($valid);
-
+    echo json_encode($valid);
 }
 
 ?>

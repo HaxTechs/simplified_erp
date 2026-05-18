@@ -16,12 +16,15 @@ if($_POST) {
 	$sql = "SELECT * FROM orders WHERE order_date >= '$start_date' AND order_date <= '$end_date' and order_status = 1";
 	$query = $connect->query($sql);
 
-	$table = '<table border="1" cellspacing="0" cellpadding="0" style="width:100%;">
-		<tr>
-			<th>Order Date</th>
-			<th>Client Name</th>
-			<th>Contact</th>
-			<th>Grand Total</th>
+		$table = '<table border="1" cellspacing="0" cellpadding="0" style="width:100%;">
+			<tr>
+				<th colspan="4" style="padding: 8px;">Sales Analytics Report</th>
+			</tr>
+			<tr>
+				<th>Sale Date</th>
+				<th>Client Name</th>
+				<th>Contact</th>
+				<th>Grand Total</th>
 		</tr>
 		<tr>';
 		$totalAmount = 0;
@@ -37,10 +40,10 @@ if($_POST) {
 		$table .= '
 		</tr>
 		<tr>
-			<td colspan="3"><center>Total Amount</center></td>
-			<td><center>'.$totalAmount.'</center></td>
-		</tr>
-	</table>
+				<td colspan="3"><center>Total Sales Amount</center></td>
+				<td><center>'.$totalAmount.'</center></td>
+			</tr>
+		</table>
 	';	
 
 	echo $table;

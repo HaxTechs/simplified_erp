@@ -6,7 +6,7 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
 // Low-stock count for sidebar badge (shown to admin only)
 $lowStockCount = 0;
 if ($isAdmin) {
-	$lowStockResult = $connect->query("SELECT COUNT(*) as cnt FROM product WHERE quantity < 10 AND status = 1");
+	$lowStockResult = $connect->query("SELECT COUNT(*) as cnt FROM product WHERE quantity < 10 AND status = 1 AND active = 1");
 	if ($lowStockResult) {
 		$lowStockCount = (int) $lowStockResult->fetch_assoc()['cnt'];
 	}
@@ -37,7 +37,7 @@ $pageCssFile = 'custom/css/pages/' . $currentPage . '.css';
 		})();
 	</script>
 
-	<title>Stock Management System</title>
+		<title>ERP System</title>
 
 	<!-- bootstrap -->
 	<link rel="stylesheet" href="assests/bootstrap/css/bootstrap.min.css">
@@ -78,9 +78,9 @@ $pageCssFile = 'custom/css/pages/' . $currentPage . '.css';
 					<span class="sidebar-brand__mark">
 						<img src="logo.png" alt="Simple ERP logo">
 					</span>
-					<span class="sidebar-brand__text">
-						<strong>Simple ERP</strong>
-						<small>Admin workspace</small>
+						<span class="sidebar-brand__text">
+							<strong>ERP System</strong>
+							<small>Sales and inventory workspace</small>
 					</span>
 				</a>
 			</div>
@@ -114,15 +114,20 @@ $pageCssFile = 'custom/css/pages/' . $currentPage . '.css';
 								<span>Category</span>
 							</a>
 						</li>
-						<li id="navProduct">
-							<a href="product.php">
-								<i class="glyphicon glyphicon-ruble"></i>
-								<span>Product</span>
-								<?php if ($lowStockCount > 0) { ?>
-								<span class="sidebar-badge sidebar-badge--warning" title="<?php echo $lowStockCount; ?> item(s) low on stock"><?php echo $lowStockCount; ?></span>
-								<?php } ?>
-							</a>
-						</li>
+							<li id="navProduct">
+								<a href="product.php">
+									<span class="sidebar-menu__main">
+										<i class="glyphicon glyphicon-ruble"></i>
+										<span>Inventory</span>
+									</span>
+									<?php if ($lowStockCount > 0) { ?>
+									<span class="sidebar-menu__meta" title="<?php echo $lowStockCount; ?> inventory item(s) low on stock">
+										<span class="nav-alert-count"><?php echo $lowStockCount; ?></span>
+										<span class="low-stock-badge sidebar-low-stock-badge">Low Stock</span>
+									</span>
+									<?php } ?>
+								</a>
+							</li>
 					</ul>
 				</div>
 				<?php } ?>
@@ -130,19 +135,19 @@ $pageCssFile = 'custom/css/pages/' . $currentPage . '.css';
 				<div class="sidebar-section">
 					<div class="sidebar-section__eyebrow sidebar-section__eyebrow--with-icon" id="navOrder">
 						<i class="glyphicon glyphicon-shopping-cart"></i>
-						<span>Orders</span>
+							<span>Sales</span>
 					</div>
 					<ul class="sidebar-menu sidebar-menu--nested">
 						<li id="topNavAddOrder">
 							<a href="orders.php?o=add">
 								<i class="glyphicon glyphicon-plus"></i>
-								<span>Add Orders</span>
+									<span>New Sale</span>
 							</a>
 						</li>
 						<li id="topNavManageOrder">
 							<a href="orders.php?o=manord">
 								<i class="glyphicon glyphicon-edit"></i>
-								<span>Manage Orders</span>
+									<span>Sales History</span>
 							</a>
 						</li>
 					</ul>
@@ -155,7 +160,7 @@ $pageCssFile = 'custom/css/pages/' . $currentPage . '.css';
 						<li id="navReport">
 							<a href="report.php">
 								<i class="glyphicon glyphicon-stats"></i>
-								<span>Reports</span>
+									<span>Analytics</span>
 							</a>
 						</li>
 						<li id="importbrand">
@@ -207,8 +212,8 @@ $pageCssFile = 'custom/css/pages/' . $currentPage . '.css';
 					<i class="fa fa-bars"></i>
 				</button>
 				<div class="app-topbar__title">
-					<h1>Stock Management System</h1>
-					<p>Modernized admin panel layout</p>
+						<h1>ERP System</h1>
+						<p>Sales, inventory, and analytics workspace</p>
 				</div>
 				<div class="app-topbar__actions">
 					<button type="button" class="app-theme-toggle" id="themeToggle" aria-label="Switch to dark mode" title="Switch to dark mode">

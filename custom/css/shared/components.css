@@ -203,6 +203,27 @@ div.kv-avatar div.file-input div.file-preview {
   padding-bottom: 20px;
 }
 
+.low-stock-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background-color: #faf5ed !important;
+  color: #92600a !important;
+  border: 1px solid #e0cfac;
+  vertical-align: middle;
+  margin-left: 4px;
+}
+
+[data-theme="dark"] .low-stock-badge {
+  background-color: rgba(146, 96, 10, 0.2) !important;
+  color: #c8a060 !important;
+  border-color: rgba(146, 96, 10, 0.4);
+}
+
 .modal-loading {
   width: 50px;
   margin: auto;

@@ -83,8 +83,11 @@ CREATE TABLE `order_item` (
   `order_id` int(11) NOT NULL DEFAULT '0',
   `product_id` int(11) NOT NULL DEFAULT '0',
   `quantity` varchar(255) NOT NULL,
+  `cost_price` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `selling_price` decimal(10,2) NOT NULL DEFAULT '0.00',
   `rate` varchar(255) NOT NULL,
   `total` varchar(255) NOT NULL,
+  `profit` decimal(10,2) NOT NULL DEFAULT '0.00',
   `order_item_status` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -101,6 +104,8 @@ CREATE TABLE `product` (
   `brand_id` int(11) NOT NULL,
   `categories_id` int(11) NOT NULL,
   `quantity` varchar(255) NOT NULL,
+  `cost_price` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `selling_price` decimal(10,2) NOT NULL DEFAULT '0.00',
   `rate` varchar(255) NOT NULL,
   `active` int(11) NOT NULL DEFAULT '0',
   `status` int(11) NOT NULL DEFAULT '0'

@@ -82,7 +82,7 @@ if($_POST) {
 			}
 		})();
 	</script>
-	<title>Stock Management System</title>
+		<title>ERP System</title>
 
 	<!-- bootstrap -->
 	<link rel="stylesheet" href="assests/bootstrap/css/bootstrap.min.css">
@@ -113,8 +113,8 @@ if($_POST) {
 		<div class="row vertical">
 			<div class="col-md-5 col-md-offset-4">
 				<div class="panel panel-info login-panel">
-					<div class="panel-heading">
-						<h3 class="panel-title">Please Sign in</h3>
+						<div class="panel-heading">
+							<h3 class="panel-title">Sign in to ERP System</h3>
 					</div>
 					<div class="panel-body">
 

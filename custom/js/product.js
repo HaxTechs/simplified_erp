@@ -8,8 +8,8 @@ $(document).ready(function() {
 		'ajax': 'php_action/fetchProduct.php',
 		'order': [],
 		'createdRow': function(row, data, dataIndex) {
-			// data[3] is the quantity column (may contain HTML badge)
-			var qtyText = $('<div>').html(data[3]).text().trim();
+			// data[4] is the quantity column (may contain HTML badge)
+			var qtyText = $('<div>').html(data[4]).text().trim();
 			var qty = parseInt(qtyText, 10);
 			if (!isNaN(qty) && qty < 10) {
 				$(row).addClass('low-stock-row');
@@ -51,13 +51,14 @@ $(document).ready(function() {
 			var productImage = $("#productImage").val();
 			var productName = $("#productName").val();
 			var quantity = $("#quantity").val();
-			var rate = $("#rate").val();
+			var costPrice = $("#costPrice").val();
+			var sellingPrice = $("#sellingPrice").val();
 			var brandName = $("#brandName").val();
 			var categoryName = $("#categoryName").val();
 			var productStatus = $("#productStatus").val();
 	
-			if(productImage == "") {
-				$("#productImage").closest('.center-block').after('<p class="text-danger">Product Image field is required</p>');
+				if(productImage == "") {
+					$("#productImage").closest('.center-block').after('<p class="text-danger">Item image field is required</p>');
 				$('#productImage').closest('.form-group').addClass('has-error');
 			}	else {
 				// remov error text field
@@ -66,8 +67,8 @@ $(document).ready(function() {
 				$("#productImage").closest('.form-group').addClass('has-success');	  	
 			}	// /else
 
-			if(productName == "") {
-				$("#productName").after('<p class="text-danger">Product Name field is required</p>');
+				if(productName == "") {
+					$("#productName").after('<p class="text-danger">Item name field is required</p>');
 				$('#productName').closest('.form-group').addClass('has-error');
 			}	else {
 				// remov error text field
@@ -86,15 +87,24 @@ $(document).ready(function() {
 				$("#quantity").closest('.form-group').addClass('has-success');	  	
 			}	// /else
 
-			if(rate == "") {
-				$("#rate").after('<p class="text-danger">Rate field is required</p>');
-				$('#rate').closest('.form-group').addClass('has-error');
+			if(costPrice == "") {
+				$("#costPrice").after('<p class="text-danger">Cost price field is required</p>');
+				$('#costPrice').closest('.form-group').addClass('has-error');
 			}	else {
-				// remov error text field
-				$("#rate").find('.text-danger').remove();
-				// success out for form 
-				$("#rate").closest('.form-group').addClass('has-success');	  	
-			}	// /else
+				$("#costPrice").find('.text-danger').remove();
+				$("#costPrice").closest('.form-group').addClass('has-success');	  	
+			}
+
+			if(sellingPrice == "") {
+				$("#sellingPrice").after('<p class="text-danger">Selling price field is required</p>');
+				$('#sellingPrice').closest('.form-group').addClass('has-error');
+			}	else if (Number(sellingPrice) < Number(costPrice)) {
+				$("#sellingPrice").after('<p class="text-danger">Selling price should be greater than or equal to cost price</p>');
+				$('#sellingPrice').closest('.form-group').addClass('has-error');
+			} else {
+				$("#sellingPrice").find('.text-danger').remove();
+				$("#sellingPrice").closest('.form-group').addClass('has-success');
+			}
 
 			if(brandName == "") {
 				$("#brandName").after('<p class="text-danger">Brand Name field is required</p>');
@@ -116,8 +126,8 @@ $(document).ready(function() {
 				$("#categoryName").closest('.form-group').addClass('has-success');	  	
 			}	// /else
 
-			if(productStatus == "") {
-				$("#productStatus").after('<p class="text-danger">Product Status field is required</p>');
+				if(productStatus == "") {
+					$("#productStatus").after('<p class="text-danger">Availability field is required</p>');
 				$('#productStatus').closest('.form-group').addClass('has-error');
 			}	else {
 				// remov error text field
@@ -126,7 +136,7 @@ $(document).ready(function() {
 				$("#productStatus").closest('.form-group').addClass('has-success');	  	
 			}	// /else
 
-			if(productImage && productName && quantity && rate && brandName && categoryName && productStatus) {
+			if(productImage && productName && quantity && costPrice && sellingPrice && Number(sellingPrice) >= Number(costPrice) && brandName && categoryName && productStatus) {
 				// submit loading button
 				$("#createProductBtn").button('loading');
 
@@ -164,7 +174,7 @@ $(document).ready(function() {
 								});
 							}); // /.alert
 
-		          // reload the manage student table
+		          // reload the inventory table
 							manageProductTable.ajax.reload(null, true);
 
 							// remove text-error 
@@ -243,8 +253,9 @@ function editProduct(productId = null) {
 				$("#editProductName").val(response.product_name);
 				// quantity
 				$("#editQuantity").val(response.quantity);
-				// rate
-				$("#editRate").val(response.rate);
+				// pricing
+				$("#editCostPrice").val(response.cost_price);
+				$("#editSellingPrice").val(response.selling_price);
 				// brand name
 				$("#editBrandName").val(response.brand_id);
 				// category name
@@ -259,14 +270,15 @@ function editProduct(productId = null) {
 					var productImage = $("#editProductImage").val();
 					var productName = $("#editProductName").val();
 					var quantity = $("#editQuantity").val();
-					var rate = $("#editRate").val();
+					var costPrice = $("#editCostPrice").val();
+					var sellingPrice = $("#editSellingPrice").val();
 					var brandName = $("#editBrandName").val();
 					var categoryName = $("#editCategoryName").val();
 					var productStatus = $("#editProductStatus").val();
 								
 
-					if(productName == "") {
-						$("#editProductName").after('<p class="text-danger">Product Name field is required</p>');
+						if(productName == "") {
+							$("#editProductName").after('<p class="text-danger">Item name field is required</p>');
 						$('#editProductName').closest('.form-group').addClass('has-error');
 					}	else {
 						// remov error text field
@@ -285,15 +297,24 @@ function editProduct(productId = null) {
 						$("#editQuantity").closest('.form-group').addClass('has-success');	  	
 					}	// /else
 
-					if(rate == "") {
-						$("#editRate").after('<p class="text-danger">Rate field is required</p>');
-						$('#editRate').closest('.form-group').addClass('has-error');
+					if(costPrice == "") {
+						$("#editCostPrice").after('<p class="text-danger">Cost price field is required</p>');
+						$('#editCostPrice').closest('.form-group').addClass('has-error');
 					}	else {
-						// remov error text field
-						$("#editRate").find('.text-danger').remove();
-						// success out for form 
-						$("#editRate").closest('.form-group').addClass('has-success');	  	
-					}	// /else
+						$("#editCostPrice").find('.text-danger').remove();
+						$("#editCostPrice").closest('.form-group').addClass('has-success');	  	
+					}
+
+					if(sellingPrice == "") {
+						$("#editSellingPrice").after('<p class="text-danger">Selling price field is required</p>');
+						$('#editSellingPrice').closest('.form-group').addClass('has-error');
+					}	else if (Number(sellingPrice) < Number(costPrice)) {
+						$("#editSellingPrice").after('<p class="text-danger">Selling price should be greater than or equal to cost price</p>');
+						$('#editSellingPrice').closest('.form-group').addClass('has-error');
+					} else {
+						$("#editSellingPrice").find('.text-danger').remove();
+						$("#editSellingPrice").closest('.form-group').addClass('has-success');	  	
+					}
 
 					if(brandName == "") {
 						$("#editBrandName").after('<p class="text-danger">Brand Name field is required</p>');
@@ -315,8 +336,8 @@ function editProduct(productId = null) {
 						$("#editCategoryName").closest('.form-group').addClass('has-success');	  	
 					}	// /else
 
-					if(productStatus == "") {
-						$("#editProductStatus").after('<p class="text-danger">Product Status field is required</p>');
+						if(productStatus == "") {
+							$("#editProductStatus").after('<p class="text-danger">Availability field is required</p>');
 						$('#editProductStatus').closest('.form-group').addClass('has-error');
 					}	else {
 						// remov error text field
@@ -325,7 +346,7 @@ function editProduct(productId = null) {
 						$("#editProductStatus").closest('.form-group').addClass('has-success');	  	
 					}	// /else					
 
-					if(productName && quantity && rate && brandName && categoryName && productStatus) {
+					if(productName && quantity && costPrice && sellingPrice && Number(sellingPrice) >= Number(costPrice) && brandName && categoryName && productStatus) {
 						// submit loading button
 						$("#editProductBtn").button('loading');
 
@@ -383,8 +404,8 @@ function editProduct(productId = null) {
 					// form validation
 					var productImage = $("#editProductImage").val();					
 					
-					if(productImage == "") {
-						$("#editProductImage").closest('.center-block').after('<p class="text-danger">Product Image field is required</p>');
+						if(productImage == "") {
+							$("#editProductImage").closest('.center-block').after('<p class="text-danger">Item image field is required</p>');
 						$('#editProductImage').closest('.form-group').addClass('has-error');
 					}	else {
 						// remov error text field

@@ -9,7 +9,8 @@ if($_POST) {
 	$productName 		= $_POST['productName'];
   // $productImage 	= $_POST['productImage'];
   $quantity 			= $_POST['quantity'];
-  $rate 					= $_POST['rate'];
+  $costPrice 		= $_POST['costPrice'];
+  $sellingPrice 	= $_POST['sellingPrice'];
   $brandName 			= $_POST['brandName'];
   $categoryName 	= $_POST['categoryName'];
   $productStatus 	= $_POST['productStatus'];
@@ -21,15 +22,15 @@ if($_POST) {
 		if(is_uploaded_file($_FILES['productImage']['tmp_name'])) {			
 			if(move_uploaded_file($_FILES['productImage']['tmp_name'], $url)) {
 				
-				$sql = "INSERT INTO product (product_name, product_image, brand_id, categories_id, quantity, rate, active, status) 
-				VALUES ('$productName', '$url', '$brandName', '$categoryName', '$quantity', '$rate', '$productStatus', 1)";
+				$sql = "INSERT INTO product (product_name, product_image, brand_id, categories_id, quantity, cost_price, selling_price, rate, active, status) 
+				VALUES ('$productName', '$url', '$brandName', '$categoryName', '$quantity', '$costPrice', '$sellingPrice', '$sellingPrice', '$productStatus', 1)";
 
 				if($connect->query($sql) === TRUE) {
 					$valid['success'] = true;
-					$valid['messages'] = "Successfully Added";	
+					$valid['messages'] = "Inventory item added successfully";	
 				} else {
 					$valid['success'] = false;
-					$valid['messages'] = "Error while adding the members";
+					$valid['messages'] = "Error while adding the inventory item";
 				}
 
 			}	else {

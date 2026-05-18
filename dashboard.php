@@ -2,26 +2,42 @@
 
 <?php 
 
-$sql = "SELECT * FROM product WHERE status = 1";
+$sql = "SELECT * FROM product WHERE status = 1 AND active = 1";
 $query = $connect->query($sql);
-$countProduct = $query->num_rows;
+$countInventory = $query->num_rows;
 
 $orderSql = "SELECT * FROM orders WHERE order_status = 1";
 $orderQuery = $connect->query($orderSql);
-$countOrder = $orderQuery->num_rows;
+$countSales = $orderQuery->num_rows;
 
 $totalRevenue = 0;
 while ($orderResult = $orderQuery->fetch_assoc()) {
-	$totalRevenue += $orderResult['paid'];
+	$totalRevenue += $orderResult['grand_total'];
 }
 
-$lowStockSql = "SELECT * FROM product WHERE quantity < 10 AND status = 1";
+$profitSql = "SELECT COALESCE(SUM(order_item.profit), 0) AS total_profit
+	FROM order_item
+	INNER JOIN orders ON orders.order_id = order_item.order_id
+	WHERE order_item.order_item_status = 1 AND orders.order_status = 1";
+$profitResult = $connect->query($profitSql);
+$totalProfit = 0;
+if ($profitResult && $profitResult->num_rows > 0) {
+	$totalProfit = (float) $profitResult->fetch_assoc()['total_profit'];
+}
+
+$lowStockSql = "SELECT * FROM product WHERE quantity < 10 AND status = 1 AND active = 1";
 $lowStockQuery = $connect->query($lowStockSql);
 $countLowStock = $lowStockQuery->num_rows;
 
+$lowStockSummarySql = "SELECT product_name, quantity, selling_price
+	FROM product
+	WHERE quantity < 10 AND status = 1 AND active = 1
+	ORDER BY CAST(quantity AS UNSIGNED) ASC, product_name ASC
+	LIMIT 5";
+$lowStockSummaryQuery = $connect->query($lowStockSummarySql);
+
 $userwisesql = "SELECT users.username , SUM(orders.grand_total) as totalorder FROM orders INNER JOIN users ON orders.user_id = users.user_id WHERE orders.order_status = 1 GROUP BY orders.user_id";
 $userwiseQuery = $connect->query($userwisesql);
-$userwieseOrder = $userwiseQuery->num_rows;
 
 $connect->close();
 
@@ -34,33 +50,33 @@ $connect->close();
 
 <div class="row dashboard-grid">
 	<?php if (isset($_SESSION['userId']) && $_SESSION['userId'] == 1) { ?>
-	<div class="col-lg-4 col-sm-6">
-		<a class="dashboard-stat-card dashboard-stat-card--success" href="product.php">
-			<span class="dashboard-card__label">Inventory</span>
-			<h2 class="dashboard-card__value"><?php echo number_format($countProduct); ?></h2>
-			<span class="dashboard-card__meta">Total products in the catalog</span>
-			<span class="dashboard-card__icon"><i class="glyphicon glyphicon-ruble"></i></span>
-		</a>
-	</div>
+		<div class="col-lg-4 col-sm-6">
+			<a class="dashboard-stat-card dashboard-stat-card--success" href="product.php">
+				<span class="dashboard-card__label">Inventory</span>
+				<h2 class="dashboard-card__value"><?php echo number_format($countInventory); ?></h2>
+				<span class="dashboard-card__meta">Total inventory items in the catalog</span>
+				<span class="dashboard-card__icon"><i class="glyphicon glyphicon-ruble"></i></span>
+			</a>
+		</div>
 
-	<div class="col-lg-4 col-sm-6">
-		<a class="dashboard-stat-card dashboard-stat-card--danger" href="product.php">
-			<span class="dashboard-card__label">Attention</span>
-			<h2 class="dashboard-card__value"><?php echo number_format($countLowStock); ?></h2>
-			<span class="dashboard-card__meta">Products that are low on stock</span>
-			<span class="dashboard-card__icon"><i class="glyphicon glyphicon-warning-sign"></i></span>
-		</a>
-	</div>
+		<div class="col-lg-4 col-sm-6">
+			<a class="dashboard-stat-card dashboard-stat-card--danger" href="product.php">
+				<span class="dashboard-card__label">Low Stock</span>
+				<h2 class="dashboard-card__value"><?php echo number_format($countLowStock); ?></h2>
+				<span class="dashboard-card__meta">Inventory items that need restocking</span>
+				<span class="dashboard-card__icon"><i class="glyphicon glyphicon-warning-sign"></i></span>
+			</a>
+		</div>
 	<?php } ?>
 
-	<div class="col-lg-4 col-sm-6">
-		<a class="dashboard-stat-card dashboard-stat-card--primary" href="orders.php?o=manord">
-			<span class="dashboard-card__label">Orders</span>
-			<h2 class="dashboard-card__value"><?php echo number_format($countOrder); ?></h2>
-			<span class="dashboard-card__meta">Total processed orders</span>
-			<span class="dashboard-card__icon"><i class="glyphicon glyphicon-shopping-cart"></i></span>
-		</a>
-	</div>
+		<div class="col-lg-4 col-sm-6">
+			<a class="dashboard-stat-card dashboard-stat-card--primary" href="orders.php?o=manord">
+				<span class="dashboard-card__label">Sales</span>
+				<h2 class="dashboard-card__value"><?php echo number_format($countSales); ?></h2>
+				<span class="dashboard-card__meta">Total processed sales</span>
+				<span class="dashboard-card__icon"><i class="glyphicon glyphicon-shopping-cart"></i></span>
+			</a>
+		</div>
 
 	<div class="col-lg-4 col-sm-6">
 		<div class="dashboard-note-card">
@@ -71,30 +87,67 @@ $connect->close();
 		</div>
 	</div>
 
-	<div class="col-lg-4 col-sm-6">
-		<div class="dashboard-stat-card dashboard-stat-card--warning">
-			<span class="dashboard-card__label">Revenue</span>
-			<h2 class="dashboard-card__value">CFA <?php echo number_format((float) $totalRevenue, 2); ?></h2>
-			<span class="dashboard-card__meta">Total paid amount across orders</span>
-			<span class="dashboard-card__icon"><i class="glyphicon glyphicon-stats"></i></span>
+		<div class="col-lg-4 col-sm-6">
+			<div class="dashboard-stat-card dashboard-stat-card--warning">
+				<span class="dashboard-card__label">Revenue</span>
+				<h2 class="dashboard-card__value">CFA <?php echo number_format((float) $totalRevenue, 2); ?></h2>
+				<span class="dashboard-card__meta">Total revenue across recorded sales</span>
+				<span class="dashboard-card__icon"><i class="glyphicon glyphicon-stats"></i></span>
+			</div>
+		</div>
+
+		<div class="col-lg-4 col-sm-6">
+			<div class="dashboard-stat-card dashboard-stat-card--success">
+				<span class="dashboard-card__label">Gross Profit</span>
+				<h2 class="dashboard-card__value">CFA <?php echo number_format($totalProfit, 2); ?></h2>
+				<span class="dashboard-card__meta">Estimated profit from recorded sales</span>
+				<span class="dashboard-card__icon"><i class="glyphicon glyphicon-piggy-bank"></i></span>
+			</div>
 		</div>
 	</div>
-</div>
 
-<?php if (isset($_SESSION['userId']) && $_SESSION['userId'] == 1) { ?>
-<div class="row">
-	<div class="col-md-12">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<i class="glyphicon glyphicon-user"></i> User Wise Order
+	<?php if (isset($_SESSION['userId']) && $_SESSION['userId'] == 1) { ?>
+	<div class="row">
+		<div class="col-lg-5">
+			<div class="panel panel-default dashboard-summary-panel">
+				<div class="panel-heading">
+					<i class="glyphicon glyphicon-warning-sign"></i> Inventory Alerts
+				</div>
+				<div class="panel-body">
+					<?php if ($countLowStock > 0) { ?>
+					<ul class="dashboard-alert-list">
+						<?php while ($lowStockItem = $lowStockSummaryQuery->fetch_assoc()) { ?>
+						<li>
+								<div>
+									<strong><?php echo htmlspecialchars($lowStockItem['product_name']); ?></strong>
+									<span class="dashboard-alert-list__meta">Selling price: CFA <?php echo number_format((float) $lowStockItem['selling_price'], 2); ?></span>
+								</div>
+								<div class="dashboard-alert-list__status">
+									<span class="low-stock-badge"><i class="glyphicon glyphicon-warning-sign"></i> Low Stock</span>
+									<span class="dashboard-alert-list__qty"><?php echo (int) $lowStockItem['quantity']; ?></span>
+								</div>
+							</li>
+							<?php } ?>
+						</ul>
+					<?php } else { ?>
+					<p class="dashboard-empty-state">No urgent low-stock inventory items right now.</p>
+					<?php } ?>
+				</div>
 			</div>
-			<div class="panel-body">
-				<table class="table dashboard-user-orders" id="productTable">
-			  	<thead>
-			  		<tr>
-			  			<th>Name</th>
-			  			<th>Orders in Rupees</th>
-			  		</tr>
+		</div>
+
+		<div class="col-lg-7">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<i class="glyphicon glyphicon-user"></i> User Wise Sales
+				</div>
+				<div class="panel-body">
+					<table class="table dashboard-user-orders" id="productTable">
+				  	<thead>
+				  		<tr>
+				  			<th>Name</th>
+				  			<th>Sales Amount</th>
+				  		</tr>
 			  	</thead>
 			  	<tbody>
 					<?php while ($orderResult = $userwiseQuery->fetch_assoc()) { ?>

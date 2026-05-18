@@ -139,6 +139,7 @@
 .sidebar-menu li > a {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   gap: 12px;
   min-height: 48px;
   padding: 12px 14px;
@@ -146,6 +147,41 @@
   border-radius: 14px;
   color: var(--app-sidebar-heading-strong);
   font-weight: 500;
+  text-align: left;
+}
+
+.sidebar-menu__main {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.sidebar-menu__meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.nav-alert-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: #d14b5a;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.sidebar-low-stock-badge {
+  margin-left: 0;
+  white-space: nowrap;
 }
 
 .sidebar-menu li > a i {
@@ -271,7 +307,9 @@ body.sidebar-collapsed .app-main {
 
 body.sidebar-collapsed .sidebar-brand__text,
 body.sidebar-collapsed .sidebar-section__eyebrow span,
-body.sidebar-collapsed .sidebar-menu li > a span {
+body.sidebar-collapsed .sidebar-menu li > a > span:not(.sidebar-menu__meta),
+body.sidebar-collapsed .sidebar-menu__main span,
+body.sidebar-collapsed .sidebar-menu__meta {
   display: none;
 }
 

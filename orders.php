@@ -16,12 +16,12 @@ if($_GET['o'] == 'add') {
 
 <ol class="breadcrumb">
   <li><a href="dashboard.php">Home</a></li>
-  <li>Order</li>
+  <li>Sales</li>
   <li class="active">
   	<?php if($_GET['o'] == 'add') { ?>
-  		Add Order
+  		New Sale
 		<?php } else if($_GET['o'] == 'manord') { ?>
-			Manage Order
+			Sales History
 		<?php } // /else manage order ?>
   </li>
 </ol>
@@ -30,11 +30,11 @@ if($_GET['o'] == 'add') {
 <h4>
 	<i class='glyphicon glyphicon-circle-arrow-right'></i>
 	<?php if($_GET['o'] == 'add') {
-		echo "Add Order";
+		echo "New Sale";
 	} else if($_GET['o'] == 'manord') { 
-		echo "Manage Order";
+		echo "Sales History";
 	} else if($_GET['o'] == 'editOrd') { 
-		echo "Edit Order";
+		echo "Edit Sale";
 	}
 	?>	
 </h4>
@@ -45,11 +45,11 @@ if($_GET['o'] == 'add') {
 	<div class="panel-heading">
 
 		<?php if($_GET['o'] == 'add') { ?>
-  		<i class="glyphicon glyphicon-plus-sign"></i>	Add Order
+  		<i class="glyphicon glyphicon-plus-sign"></i>	New Sale
 		<?php } else if($_GET['o'] == 'manord') { ?>
-			<i class="glyphicon glyphicon-edit"></i> Manage Order
+			<i class="glyphicon glyphicon-edit"></i> Sales History
 		<?php } else if($_GET['o'] == 'editOrd') { ?>
-			<i class="glyphicon glyphicon-edit"></i> Edit Order
+			<i class="glyphicon glyphicon-edit"></i> Edit Sale
 		<?php } ?>
 
 	</div> <!--/panel-->	
@@ -64,7 +64,7 @@ if($_GET['o'] == 'add') {
   		<form class="form-horizontal" method="POST" action="php_action/createOrder.php" id="createOrderForm">
 
 			  <div class="form-group">
-			    <label for="orderDate" class="col-sm-2 control-label">Order Date</label>
+			    <label for="orderDate" class="col-sm-2 control-label">Sale Date</label>
 			    <div class="col-sm-10">
 			      <input type="text" class="form-control" id="orderDate" name="orderDate" autocomplete="off" />
 			    </div>
@@ -85,8 +85,8 @@ if($_GET['o'] == 'add') {
 			  <table class="table orders-product-table" id="productTable">
 			  	<thead>
 			  		<tr>			  			
-			  			<th>Product</th>
-			  			<th>Rate</th>
+			  			<th>Inventory Item</th>
+			  			<th>Selling Price</th>
 			  			<th>Available Quantity</th>
 			  			<th>Quantity</th>			  			
 			  			<th>Total</th>			  			
@@ -116,8 +116,10 @@ if($_GET['o'] == 'add') {
 			  					</div>
 			  				</td>
 			  				<td>			  					
-			  					<input type="text" name="rate[]" id="rate<?php echo $x; ?>" autocomplete="off" disabled="true" class="form-control" />			  					
-			  					<input type="hidden" name="rateValue[]" id="rateValue<?php echo $x; ?>" autocomplete="off" class="form-control" />			  					
+			  					<input type="text" name="sellingPrice[]" id="sellingPrice<?php echo $x; ?>" autocomplete="off" disabled="true" class="form-control" />			  					
+			  					<input type="hidden" name="sellingPriceValue[]" id="sellingPriceValue<?php echo $x; ?>" autocomplete="off" class="form-control" />
+			  					<input type="hidden" name="costPriceValue[]" id="costPriceValue<?php echo $x; ?>" autocomplete="off" class="form-control" />
+			  					<input type="hidden" name="profitValue[]" id="profitValue<?php echo $x; ?>" autocomplete="off" class="form-control" />
 			  				</td>
 							<td>
 			  					<div class="form-group">
@@ -252,10 +254,10 @@ if($_GET['o'] == 'add') {
 				<thead>
 					<tr>
 						<th>#</th>
-						<th>Order Date</th>
+						<th>Sale Date</th>
 						<th>Client Name</th>
 						<th>Contact</th>
-						<th>Total Order Item</th>
+						<th>Total Items</th>
 						<th>Payment Status</th>
 						<th>Option</th>
 					</tr>
@@ -282,7 +284,7 @@ if($_GET['o'] == 'add') {
   			?>
 
 			  <div class="form-group">
-			    <label for="orderDate" class="col-sm-2 control-label">Order Date</label>
+			    <label for="orderDate" class="col-sm-2 control-label">Sale Date</label>
 			    <div class="col-sm-10">
 			      <input type="text" class="form-control" id="orderDate" name="orderDate" autocomplete="off" value="<?php echo $data[1] ?>" />
 			    </div>
@@ -303,8 +305,8 @@ if($_GET['o'] == 'add') {
 			  <table class="table orders-product-table" id="productTable">
 			  	<thead>
 			  		<tr>			  			
-			  			<th>Product</th>
-			  			<th>Rate</th>
+			  			<th>Inventory Item</th>
+			  			<th>Selling Price</th>
 			  			<th>Available Quantity</th>			  			
 			  			<th>Quantity</th>			  			
 			  			<th>Total</th>			  			
@@ -314,7 +316,18 @@ if($_GET['o'] == 'add') {
 			  	<tbody>
 			  		<?php
 
-			  		$orderItemSql = "SELECT order_item.order_item_id, order_item.order_id, order_item.product_id, order_item.quantity, order_item.rate, order_item.total FROM order_item WHERE order_item.order_id = {$orderId}";
+				  		$orderItemSql = "SELECT 
+							order_item.order_item_id,
+							order_item.order_id,
+							order_item.product_id,
+							order_item.quantity,
+							COALESCE(NULLIF(order_item.selling_price, 0), CAST(order_item.rate AS DECIMAL(10,2))) AS selling_price,
+							COALESCE(NULLIF(order_item.cost_price, 0), product.cost_price, CAST(order_item.rate AS DECIMAL(10,2))) AS cost_price,
+							COALESCE(NULLIF(order_item.profit, 0), ((COALESCE(NULLIF(order_item.selling_price, 0), CAST(order_item.rate AS DECIMAL(10,2))) - COALESCE(NULLIF(order_item.cost_price, 0), product.cost_price, CAST(order_item.rate AS DECIMAL(10,2)))) * CAST(order_item.quantity AS DECIMAL(10,2)))) AS profit,
+							order_item.total
+							FROM order_item
+							INNER JOIN product ON order_item.product_id = product.product_id
+							WHERE order_item.order_id = {$orderId}";
 						$orderItemResult = $connect->query($orderItemSql);
 						// $orderItemData = $orderItemResult->fetch_all();						
 						
@@ -350,8 +363,10 @@ if($_GET['o'] == 'add') {
 			  					</div>
 			  				</td>
 			  				<td>			  					
-			  					<input type="text" name="rate[]" id="rate<?php echo $x; ?>" autocomplete="off" disabled="true" class="form-control" value="<?php echo $orderItemData['rate']; ?>" />			  					
-			  					<input type="hidden" name="rateValue[]" id="rateValue<?php echo $x; ?>" autocomplete="off" class="form-control" value="<?php echo $orderItemData['rate']; ?>" />			  					
+			  					<input type="text" name="sellingPrice[]" id="sellingPrice<?php echo $x; ?>" autocomplete="off" disabled="true" class="form-control" value="<?php echo $orderItemData['selling_price']; ?>" />			  					
+			  					<input type="hidden" name="sellingPriceValue[]" id="sellingPriceValue<?php echo $x; ?>" autocomplete="off" class="form-control" value="<?php echo $orderItemData['selling_price']; ?>" />
+			  					<input type="hidden" name="costPriceValue[]" id="costPriceValue<?php echo $x; ?>" autocomplete="off" class="form-control" value="<?php echo $orderItemData['cost_price']; ?>" />
+			  					<input type="hidden" name="profitValue[]" id="profitValue<?php echo $x; ?>" autocomplete="off" class="form-control" value="<?php echo $orderItemData['profit']; ?>" />
 			  				</td>
 							<td>
 			  					<div class="form-group">
@@ -359,16 +374,16 @@ if($_GET['o'] == 'add') {
 			  							$productSql = "SELECT * FROM product WHERE active = 1 AND status = 1 AND quantity != 0";
 			  							$productData = $connect->query($productSql);
 
-			  							while($row = $productData->fetch_array()) {									 		
-			  								$selected = "";
-			  								if($row['product_id'] == $orderItemData['product_id']) { 
-			  									echo "<p id='available_quantity".$row['product_id']."'>".$row['quantity']."</p>";
-											}
-			  								 else {
-			  									$selected = "";
-			  								}
+				  							while($row = $productData->fetch_array()) {									 		
+				  								if($row['product_id'] == $orderItemData['product_id']) {
+				  									$availabilityText = $row['quantity'];
+				  									if ((int) $row['quantity'] < 10) {
+				  										$availabilityText .= " <span class='label label-warning low-stock-badge'><i class=\"glyphicon glyphicon-warning-sign\"></i> Low Stock</span>";
+				  									}
+				  									echo "<p id='available_quantity".$x."'>".$availabilityText."</p>";
+												}
 
-			  								//echo "<option value='".$row['product_id']."' id='changeProduct".$row['product_id']."' ".$selected." >".$row['product_name']."</option>";
+				  								//echo "<option value='".$row['product_id']."' id='changeProduct".$row['product_id']."' ".$selected." >".$row['product_name']."</option>";
 										 	} // /while 
 
 			  						?>
@@ -591,13 +606,13 @@ if($_GET['o'] == 'add') {
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title"><i class="glyphicon glyphicon-trash"></i> Remove Order</h4>
+        <h4 class="modal-title"><i class="glyphicon glyphicon-trash"></i> Remove Sale</h4>
       </div>
       <div class="modal-body">
 
       	<div class="removeOrderMessages"></div>
 
-        <p>Do you really want to remove ?</p>
+        <p>Do you really want to remove this sale?</p>
       </div>
       <div class="modal-footer removeProductFooter">
         <button type="button" class="btn btn-default" data-dismiss="modal"> <i class="glyphicon glyphicon-remove-sign"></i> Close</button>

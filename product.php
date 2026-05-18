@@ -6,27 +6,28 @@
 
 		<ol class="breadcrumb">
 		  <li><a href="dashboard.php">Home</a></li>		  
-		  <li class="active">Product</li>
+		  <li class="active">Inventory</li>
 		</ol>
 
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<div class="page-heading"> <i class="glyphicon glyphicon-edit"></i> Manage Product</div>
+				<div class="page-heading"> <i class="glyphicon glyphicon-edit"></i> Manage Inventory</div>
 			</div> <!-- /panel-heading -->
 			<div class="panel-body">
 
 				<div class="remove-messages"></div>
 
 				<div class="div-action page-actions pull pull-right">
-					<button class="btn btn-default button1" data-toggle="modal" id="addProductModalBtn" data-target="#addProductModal"> <i class="glyphicon glyphicon-plus-sign"></i> Add Product </button>
+					<button class="btn btn-default button1" data-toggle="modal" id="addProductModalBtn" data-target="#addProductModal"> <i class="glyphicon glyphicon-plus-sign"></i> Add Inventory Item </button>
 				</div> <!-- /div-action -->				
 				
 				<table class="table product-table" id="manageProductTable">
 					<thead>
 						<tr>
 							<th>Photo</th>							
-							<th>Product Name</th>
-							<th>Rate</th>							
+							<th>Item Name</th>
+							<th>Cost Price</th>
+							<th>Selling Price</th>							
 							<th>Quantity</th>
 							<th>Brand</th>
 							<th>Category</th>
@@ -51,7 +52,7 @@
     	<form class="form-horizontal" id="submitProductForm" action="php_action/createProduct.php" method="POST" enctype="multipart/form-data">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title"><i class="fa fa-plus"></i> Add Product</h4>
+	        <h4 class="modal-title"><i class="fa fa-plus"></i> Add Inventory Item</h4>
 	      </div>
 
 	      <div class="modal-body product-modal-body">
@@ -59,23 +60,23 @@
 	      	<div id="add-product-messages"></div>
 
 	      	<div class="form-group">
-	        	<label for="productImage" class="col-sm-3 control-label">Product Image: </label>
+	        	<label for="productImage" class="col-sm-3 control-label">Item Image: </label>
 	        	<label class="col-sm-1 control-label">: </label>
 				    <div class="col-sm-8">
 					    <!-- the avatar markup -->
 							<div id="kv-avatar-errors-1" class="center-block product-error-container"></div>							
 					    <div class="kv-avatar center-block">					        
-					        <input type="file" class="form-control file-loading product-file-input" id="productImage" placeholder="Product Name" name="productImage"/>
+					        <input type="file" class="form-control file-loading product-file-input" id="productImage" placeholder="Inventory item image" name="productImage"/>
 					    </div>
 				      
 				    </div>
 	        </div> <!-- /form-group-->	     	           	       
 
 	        <div class="form-group">
-	        	<label for="productName" class="col-sm-3 control-label">Product Name: </label>
+	        	<label for="productName" class="col-sm-3 control-label">Item Name: </label>
 	        	<label class="col-sm-1 control-label">: </label>
 				    <div class="col-sm-8">
-				      <input type="text" class="form-control" id="productName" placeholder="Product Name" name="productName" autocomplete="off">
+				      <input type="text" class="form-control" id="productName" placeholder="Inventory Item Name" name="productName" autocomplete="off">
 				    </div>
 	        </div> <!-- /form-group-->	    
 
@@ -88,10 +89,18 @@
 	        </div> <!-- /form-group-->	        	 
 
 	        <div class="form-group">
-	        	<label for="rate" class="col-sm-3 control-label">Rate: </label>
+	        	<label for="costPrice" class="col-sm-3 control-label">Cost Price: </label>
 	        	<label class="col-sm-1 control-label">: </label>
 				    <div class="col-sm-8">
-				      <input type="text" class="form-control" id="rate" placeholder="Rate" name="rate" autocomplete="off">
+				      <input type="number" class="form-control" id="costPrice" placeholder="Cost Price" name="costPrice" autocomplete="off" min="0" step="0.01">
+				    </div>
+	        </div> <!-- /form-group-->	     
+
+	        <div class="form-group">
+	        	<label for="sellingPrice" class="col-sm-3 control-label">Selling Price: </label>
+	        	<label class="col-sm-1 control-label">: </label>
+				    <div class="col-sm-8">
+				      <input type="number" class="form-control" id="sellingPrice" placeholder="Selling Price" name="sellingPrice" autocomplete="off" min="0" step="0.01">
 				    </div>
 	        </div> <!-- /form-group-->	     	        
 
@@ -118,7 +127,7 @@
 	        	<label for="categoryName" class="col-sm-3 control-label">Category Name: </label>
 	        	<label class="col-sm-1 control-label">: </label>
 				    <div class="col-sm-8">
-				      <select type="text" class="form-control" id="categoryName" placeholder="Product Name" name="categoryName" >
+				      <select type="text" class="form-control" id="categoryName" placeholder="Category Name" name="categoryName" >
 				      	<option value="">~~SELECT~~</option>
 				      	<?php 
 				      	$sql = "SELECT categories_id, categories_name, categories_active, categories_status FROM categories WHERE categories_status = 1 AND categories_active = 1";
@@ -165,7 +174,7 @@
     	    	
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title"><i class="fa fa-edit"></i> Edit Product</h4>
+	        <h4 class="modal-title"><i class="fa fa-edit"></i> Edit Inventory Item</h4>
 	      </div>
 	      <div class="modal-body product-modal-body">
 
@@ -179,7 +188,7 @@
 				  <!-- Nav tabs -->
 				  <ul class="nav nav-tabs" role="tablist">
 				    <li role="presentation" class="active"><a href="#photo" aria-controls="home" role="tab" data-toggle="tab">Photo</a></li>
-				    <li role="presentation"><a href="#productInfo" aria-controls="profile" role="tab" data-toggle="tab">Product Info</a></li>    
+				    <li role="presentation"><a href="#productInfo" aria-controls="profile" role="tab" data-toggle="tab">Inventory Info</a></li>    
 				  </ul>
 
 				  <!-- Tab panes -->
@@ -193,7 +202,7 @@
 				    	<div id="edit-productPhoto-messages"></div>
 
 				    	<div class="form-group">
-			        	<label for="editProductImage" class="col-sm-3 control-label">Product Image: </label>
+			        	<label for="editProductImage" class="col-sm-3 control-label">Item Image: </label>
 			        	<label class="col-sm-1 control-label">: </label>
 						    <div class="col-sm-8">							    				   
 						      <img src="" id="getProductImage" class="thumbnail product-image-preview" />
@@ -207,7 +216,7 @@
 							    <!-- the avatar markup -->
 									<div id="kv-avatar-errors-1" class="center-block product-error-container"></div>							
 							    <div class="kv-avatar center-block">					        
-							        <input type="file" class="form-control file-loading product-file-input" id="editProductImage" placeholder="Product Name" name="editProductImage"/>
+							        <input type="file" class="form-control file-loading product-file-input" id="editProductImage" placeholder="Item Image" name="editProductImage"/>
 							    </div>
 						      
 						    </div>
@@ -230,10 +239,10 @@
 				    	<div id="edit-product-messages"></div>
 
 				    	<div class="form-group">
-			        	<label for="editProductName" class="col-sm-3 control-label">Product Name: </label>
+			        	<label for="editProductName" class="col-sm-3 control-label">Item Name: </label>
 			        	<label class="col-sm-1 control-label">: </label>
 						    <div class="col-sm-8">
-						      <input type="text" class="form-control" id="editProductName" placeholder="Product Name" name="editProductName" autocomplete="off">
+						      <input type="text" class="form-control" id="editProductName" placeholder="Inventory Item Name" name="editProductName" autocomplete="off">
 						    </div>
 			        </div> <!-- /form-group-->	    
 
@@ -246,10 +255,18 @@
 			        </div> <!-- /form-group-->	        	 
 
 			        <div class="form-group">
-			        	<label for="editRate" class="col-sm-3 control-label">Rate: </label>
+			        	<label for="editCostPrice" class="col-sm-3 control-label">Cost Price: </label>
 			        	<label class="col-sm-1 control-label">: </label>
 						    <div class="col-sm-8">
-						      <input type="text" class="form-control" id="editRate" placeholder="Rate" name="editRate" autocomplete="off">
+						      <input type="number" class="form-control" id="editCostPrice" placeholder="Cost Price" name="editCostPrice" autocomplete="off" min="0" step="0.01">
+						    </div>
+			        </div> <!-- /form-group-->	     
+
+			        <div class="form-group">
+			        	<label for="editSellingPrice" class="col-sm-3 control-label">Selling Price: </label>
+			        	<label class="col-sm-1 control-label">: </label>
+						    <div class="col-sm-8">
+						      <input type="number" class="form-control" id="editSellingPrice" placeholder="Selling Price" name="editSellingPrice" autocomplete="off" min="0" step="0.01">
 						    </div>
 			        </div> <!-- /form-group-->	     	        
 
@@ -331,13 +348,13 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title"><i class="glyphicon glyphicon-trash"></i> Remove Product</h4>
+        <h4 class="modal-title"><i class="glyphicon glyphicon-trash"></i> Remove Inventory Item</h4>
       </div>
       <div class="modal-body">
 
       	<div class="removeProductMessages"></div>
 
-        <p>Do you really want to remove ?</p>
+        <p>Do you really want to remove this inventory item?</p>
       </div>
       <div class="modal-footer removeProductFooter">
         <button type="button" class="btn btn-default" data-dismiss="modal"> <i class="glyphicon glyphicon-remove-sign"></i> Close</button>

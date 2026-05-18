@@ -1,10 +1,10 @@
 $(document).ready(function() {
 	$("#navReport").addClass('active');
 
-	// order date picker
-	$("#startDate").datepicker();
-	// order date picker
-	$("#endDate").datepicker();
+		// analytics date picker
+		$("#startDate").datepicker();
+		// analytics date picker
+		$("#endDate").datepicker();
 
 	$("#getOrderReportForm").unbind('submit').bind('submit', function() {
 		
@@ -39,8 +39,8 @@ $(document).ready(function() {
 				data: form.serialize(),
 				dataType: 'text',
 				success:function(response) {
-					var mywindow = window.open('', 'Stock Management System', 'height=400,width=600');
-	        mywindow.document.write('<html><head><title>Order Report Slip</title>');        
+					var mywindow = window.open('', 'ERP System', 'height=400,width=600');
+	        mywindow.document.write('<html><head><title>Sales Analytics Report</title>');        
 	        mywindow.document.write('</head><body>');
 	        mywindow.document.write(response);
 	        mywindow.document.write('</body></html>');

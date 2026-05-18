@@ -23,9 +23,9 @@ $payment_place = $orderData[10];
 $gstn = $orderData[11];
 
 
-$orderItemSql = "SELECT order_item.product_id, order_item.rate, order_item.quantity, order_item.total,
+$orderItemSql = "SELECT order_item.product_id, COALESCE(NULLIF(order_item.selling_price, 0), CAST(order_item.rate AS DECIMAL(10,2))) AS selling_price, order_item.quantity, order_item.total,
 product.product_name FROM order_item
-   INNER JOIN product ON order_item.product_id = product.product_id 
+	   INNER JOIN product ON order_item.product_id = product.product_id 
  WHERE order_item.order_id = $orderId";
 $orderItemResult = $connect->query($orderItemSql);
 
@@ -36,7 +36,7 @@ $orderItemResult = $connect->query($orderItemSql);
 <table align="center" cellpadding="0" cellspacing="0" style="width: 100%;border:1px solid black;margin-bottom: 10px;">
                <tbody>
                   <tr>
-                     <td colspan="5" style="text-align:center;color: red;text-decoration: underline;    font-size: 25px;">TAX INVOICE</td>
+                     <td colspan="5" style="text-align:center;color: red;text-decoration: underline;    font-size: 25px;">SALES INVOICE</td>
                   </tr>
                   <tr>
                      <td rowspan="8" colspan="2" style="border-left:1px solid black;" background-image="logo.jpg"><img src="/logo.jpg" alt="logo" width="250px;"></td>
@@ -46,7 +46,7 @@ $orderItemResult = $connect->query($orderItemSql);
                      <td colspan="3" style=" text-align: right;">DUPLICATE</td>
                   </tr>
                   <tr>
-                     <td colspan="3" style=" text-align: right;color: red;font-style: italic;font-weight: 600;text-decoration: underline;font-size: 25px;">IMS</td>
+                     <td colspan="3" style=" text-align: right;color: red;font-style: italic;font-weight: 600;text-decoration: underline;font-size: 25px;">ERP</td>
                   </tr>
                   <tr>
                      <td colspan="3" style=" text-align: right;">Nr. Your First Address,</td>
@@ -110,7 +110,7 @@ $orderItemResult = $connect->query($orderItemSql);
                      </td>
                      <td style="width: 50%;text-align: center;border-top-style: solid;border-right-style: solid;border-bottom-style: solid;border-top-width: thin;border-right-width: thin;border-bottom-width: thin;border-top-color: black;border-right-color: white;border-bottom-color: black;color: white;background-color: black;-webkit-print-color-adjust: exact;">Description Of Goods</td>
                      <td style="width: 150px;text-align: center;border-top-style: solid;border-right-style: solid;border-bottom-style: solid;border-top-width: thin;border-right-width: thin;border-bottom-width: thin;border-top-color: black;border-right-color: #fff;border-bottom-color: black;background-color: black;color: white;-webkit-print-color-adjust: exact;">Qty.</td>
-                     <td style="width: 150px;text-align: center;border-top-style: solid;border-right-style: solid;border-bottom-style: solid;border-top-width: thin;border-right-width: thin;border-bottom-width: thin;border-top-color: black;border-right-color: #fff;border-bottom-color: black;background-color: black;color: white;-webkit-print-color-adjust: exact;">Rate&nbsp; Rs.<br>
+                     <td style="width: 150px;text-align: center;border-top-style: solid;border-right-style: solid;border-bottom-style: solid;border-top-width: thin;border-right-width: thin;border-bottom-width: thin;border-top-color: black;border-right-color: #fff;border-bottom-color: black;background-color: black;color: white;-webkit-print-color-adjust: exact;">Selling Price&nbsp; Rs.<br>
                         Ps
                      </td>
                      <td style="width: 150px;text-align: center;border-top-style: solid;border-right-style: solid;border-bottom-style: solid;border-top-width: thin;border-right-width: thin;border-bottom-width: thin;border-top-color: black;border-right-color: black;border-bottom-color: black;color: white;background-color: black;-webkit-print-color-adjust: exact;">Amount&nbsp; Rs.<br>

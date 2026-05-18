@@ -69,8 +69,18 @@ if($_POST) {
 					$connect->query($updateProductTable);
 
 					// add into order_item
-				$orderItemSql = "INSERT INTO order_item (order_id, product_id, quantity, rate, total, order_item_status) 
-				VALUES ({$orderId}, '".$_POST['productName'][$x]."', '".$_POST['quantity'][$x]."', '".$_POST['rateValue'][$x]."', '".$_POST['totalValue'][$x]."', 1)";
+				$orderItemSql = "INSERT INTO order_item (order_id, product_id, quantity, cost_price, selling_price, rate, total, profit, order_item_status) 
+				VALUES (
+					{$orderId},
+					'".$_POST['productName'][$x]."',
+					'".$_POST['quantity'][$x]."',
+					'".$_POST['costPriceValue'][$x]."',
+					'".$_POST['sellingPriceValue'][$x]."',
+					'".$_POST['sellingPriceValue'][$x]."',
+					'".$_POST['totalValue'][$x]."',
+					'".$_POST['profitValue'][$x]."',
+					1
+				)";
 
 				$connect->query($orderItemSql);		
 			} // while	
@@ -80,7 +90,7 @@ if($_POST) {
 	
 
 	$valid['success'] = true;
-	$valid['messages'] = "Successfully Updated";		
+	$valid['messages'] = "Sale updated successfully";		
 	
 	$connect->close();
 

@@ -42,7 +42,7 @@ $(document).ready(function() {
 
 			// form validation 
 			if(orderDate == "") {
-				$("#orderDate").after('<p class="text-danger"> The Order Date field is required </p>');
+				$("#orderDate").after('<p class="text-danger"> The Sale Date field is required </p>');
 				$('#orderDate').closest('.form-group').addClass('has-error');
 			} else {
 				$('#orderDate').closest('.form-group').addClass('has-success');
@@ -94,10 +94,10 @@ $(document).ready(function() {
 			// array validation
 			var productName = document.getElementsByName('productName[]');				
 			var validateProduct;
-			for (var x = 0; x < productName.length; x++) {       			
+	   	for (var x = 0; x < productName.length; x++) {       			
 				var productNameId = productName[x].id;	    	
 		    if(productName[x].value == ''){	    		    	
-		    	$("#"+productNameId+"").after('<p class="text-danger"> Product Name Field is required!! </p>');
+		    	$("#"+productNameId+"").after('<p class="text-danger"> Inventory item field is required!! </p>');
 		    	$("#"+productNameId+"").closest('.form-group').addClass('has-error');	    		    	    	
 	      } else {      	
 		    	$("#"+productNameId+"").closest('.form-group').addClass('has-success');	    		    		    	
@@ -117,7 +117,7 @@ $(document).ready(function() {
 	   	for (var x = 0; x < quantity.length; x++) {       
 	 			var quantityId = quantity[x].id;
 		    if(quantity[x].value == ''){	    	
-		    	$("#"+quantityId+"").after('<p class="text-danger"> Product Name Field is required!! </p>');
+		    	$("#"+quantityId+"").after('<p class="text-danger"> Quantity field is required!! </p>');
 		    	$("#"+quantityId+"").closest('.form-group').addClass('has-error');	    		    		    	
 	      } else {      	
 		    	$("#"+quantityId+"").closest('.form-group').addClass('has-success');	    		    		    		    	
@@ -158,7 +158,7 @@ $(document).ready(function() {
 	            	'<button type="button" class="close" data-dismiss="alert">&times;</button>'+
 	            	'<strong><i class="glyphicon glyphicon-ok-sign"></i></strong> '+ response.messages +
 	            	' <br /> <br /> <a type="button" onclick="printOrder('+response.order_id+')" class="btn btn-primary"> <i class="glyphicon glyphicon-print"></i> Print </a>'+
-	            	'<a href="orders.php?o=add" class="btn btn-default" style="margin-left:10px;"> <i class="glyphicon glyphicon-plus-sign"></i> Add New Order </a>'+
+	            	'<a href="orders.php?o=add" class="btn btn-default" style="margin-left:10px;"> <i class="glyphicon glyphicon-plus-sign"></i> Add New Sale </a>'+
 	            	
 	   		       '</div>');
 								
@@ -211,7 +211,7 @@ $(document).ready(function() {
 
 			// form validation 
 			if(orderDate == "") {
-				$("#orderDate").after('<p class="text-danger"> The Order Date field is required </p>');
+				$("#orderDate").after('<p class="text-danger"> The Sale Date field is required </p>');
 				$('#orderDate').closest('.form-group').addClass('has-error');
 			} else {
 				$('#orderDate').closest('.form-group').addClass('has-success');
@@ -263,10 +263,10 @@ $(document).ready(function() {
 			// array validation
 			var productName = document.getElementsByName('productName[]');				
 			var validateProduct;
-			for (var x = 0; x < productName.length; x++) {       			
+	   	for (var x = 0; x < productName.length; x++) {       			
 				var productNameId = productName[x].id;	    	
 		    if(productName[x].value == ''){	    		    	
-		    	$("#"+productNameId+"").after('<p class="text-danger"> Product Name Field is required!! </p>');
+		    	$("#"+productNameId+"").after('<p class="text-danger"> Inventory item field is required!! </p>');
 		    	$("#"+productNameId+"").closest('.form-group').addClass('has-error');	    		    	    	
 	      } else {      	
 		    	$("#"+productNameId+"").closest('.form-group').addClass('has-success');	    		    		    	
@@ -286,7 +286,7 @@ $(document).ready(function() {
 	   	for (var x = 0; x < quantity.length; x++) {       
 	 			var quantityId = quantity[x].id;
 		    if(quantity[x].value == ''){	    	
-		    	$("#"+quantityId+"").after('<p class="text-danger"> Product Name Field is required!! </p>');
+		    	$("#"+quantityId+"").after('<p class="text-danger"> Quantity field is required!! </p>');
 		    	$("#"+quantityId+"").closest('.form-group').addClass('has-error');	    		    		    	
 	      } else {      	
 		    	$("#"+quantityId+"").closest('.form-group').addClass('has-success');	    		    		    		    	
@@ -362,8 +362,8 @@ function printOrder(orderId = null) {
 			dataType: 'text',
 			success:function(response) {
 				
-				var mywindow = window.open('', 'Stock Management System', 'height=400,width=600');
-        mywindow.document.write('<html><head><title>Order Invoice</title>');        
+				var mywindow = window.open('', 'ERP System', 'height=400,width=600');
+        mywindow.document.write('<html><head><title>Sales Invoice</title>');        
         mywindow.document.write('</head><body>');
         mywindow.document.write(response);
         mywindow.document.write('</body></html>');
@@ -427,8 +427,10 @@ function addRow() {
 					'</div>'+
 				'</td>'+
 				'<td style="padding-left:20px;"">'+
-					'<input type="text" name="rate[]" id="rate'+count+'" autocomplete="off" disabled="true" class="form-control" />'+
-					'<input type="hidden" name="rateValue[]" id="rateValue'+count+'" autocomplete="off" class="form-control" />'+
+					'<input type="text" name="sellingPrice[]" id="sellingPrice'+count+'" autocomplete="off" disabled="true" class="form-control" />'+
+					'<input type="hidden" name="sellingPriceValue[]" id="sellingPriceValue'+count+'" autocomplete="off" class="form-control" />'+
+					'<input type="hidden" name="costPriceValue[]" id="costPriceValue'+count+'" autocomplete="off" class="form-control" />'+
+					'<input type="hidden" name="profitValue[]" id="profitValue'+count+'" autocomplete="off" class="form-control" />'+
 				'</td style="padding-left:20px;">'+
 				'<td style="padding-left:20px;">'+
 					'<div class="form-group">'+
@@ -477,10 +479,15 @@ function getProductData(row = null) {
 		var productId = $("#productName"+row).val();		
 		
 		if(productId == "") {
-			$("#rate"+row).val("");
+			$("#sellingPrice"+row).val("");
+			$("#sellingPriceValue"+row).val("");
+			$("#costPriceValue"+row).val("");
+			$("#profitValue"+row).val("");
 
 			$("#quantity"+row).val("");						
 			$("#total"+row).val("");
+			$("#totalValue"+row).val("");
+			$("#available_quantity"+row).html("");
 
 			// remove check if product name is selected
 			// var tableProductLength = $("#productTable tbody tr").length;			
@@ -504,23 +511,26 @@ function getProductData(row = null) {
 				data: {productId : productId},
 				dataType: 'json',
 				success:function(response) {
-					// setting the rate value into the rate input field
-					
-					$("#rate"+row).val(response.rate);
-					$("#rateValue"+row).val(response.rate);
+					var sellingPrice = Number(response.selling_price || 0);
+					var costPrice = Number(response.cost_price || 0);
+
+					$("#sellingPrice"+row).val(sellingPrice.toFixed(2));
+					$("#sellingPriceValue"+row).val(sellingPrice.toFixed(2));
+					$("#costPriceValue"+row).val(costPrice.toFixed(2));
 
 					$("#quantity"+row).val(1);
 					var availQty = parseInt(response.quantity, 10);
 					var qtyHtml = response.quantity;
 					if (!isNaN(availQty) && availQty < 10) {
-						qtyHtml += ' <span class="label label-warning low-stock-badge" style="font-size:11px;padding:2px 6px;border-radius:4px;"><i class="glyphicon glyphicon-warning-sign"></i> Low Stock</span>';
+						qtyHtml += ' <span class="label label-warning low-stock-badge"><i class="glyphicon glyphicon-warning-sign"></i> Low Stock</span>';
 					}
 					$("#available_quantity"+row).html(qtyHtml);
 
-					var total = Number(response.rate) * 1;
+					var total = sellingPrice * 1;
 					total = total.toFixed(2);
 					$("#total"+row).val(total);
 					$("#totalValue"+row).val(total);
+					$("#profitValue"+row).val((sellingPrice - costPrice).toFixed(2));
 					
 					// check if product name is selected
 					// var tableProductLength = $("#productTable tbody tr").length;					
@@ -551,10 +561,14 @@ function getProductData(row = null) {
 // table total
 function getTotal(row = null) {
 	if(row) {
-		var total = Number($("#rate"+row).val()) * Number($("#quantity"+row).val());
+		var sellingPrice = Number($("#sellingPrice"+row).val());
+		var costPrice = Number($("#costPriceValue"+row).val());
+		var quantity = Number($("#quantity"+row).val());
+		var total = sellingPrice * quantity;
 		total = total.toFixed(2);
 		$("#total"+row).val(total);
 		$("#totalValue"+row).val(total);
+		$("#profitValue"+row).val(((sellingPrice - costPrice) * quantity).toFixed(2));
 		
 		subAmount();
 

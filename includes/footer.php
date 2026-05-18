@@ -11,10 +11,30 @@
 
 
 	<!-- DataTables -->
-	<script src="assests/plugins/datatables/jquery.dataTables.min.js"></script>
-	<script>
-		(function($) {
-			var storageKey = 'simpleErpSidebarCollapsed';
+		<script src="assests/plugins/datatables/jquery.dataTables.min.js"></script>
+		<script>
+			(function($) {
+				$.extend(true, $.fn.dataTable.defaults, {
+					language: {
+						search: "Rechercher :",
+						lengthMenu: "Afficher _MENU_ éléments",
+						info: "Affichage de _START_ à _END_ sur _TOTAL_ éléments",
+						infoEmpty: "Affichage de 0 à 0 sur 0 élément",
+						infoFiltered: "(filtré de _MAX_ éléments au total)",
+						zeroRecords: "Aucun résultat trouvé",
+						emptyTable: "Aucune donnée disponible",
+						loadingRecords: "Chargement...",
+						processing: "Traitement...",
+						paginate: {
+							first: "Premier",
+							last: "Dernier",
+							next: "Suivant",
+							previous: "Précédent"
+						}
+					}
+				});
+
+				var storageKey = 'simpleErpSidebarCollapsed';
 			var themeStorageKey = 'simpleErpTheme';
 			var $body = $('body');
 			var $toggle = $('#sidebarToggle');
@@ -30,8 +50,8 @@
 				}
 
 				var isDark = theme === 'dark';
-				$themeToggle.attr('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
-				$themeToggle.attr('title', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+					$themeToggle.attr('aria-label', isDark ? 'Passer en mode clair' : 'Passer en mode sombre');
+					$themeToggle.attr('title', isDark ? 'Passer en mode clair' : 'Passer en mode sombre');
 				$themeIcon.attr('class', isDark ? 'fa fa-sun-o' : 'fa fa-moon-o');
 			}
 

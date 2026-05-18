@@ -37,7 +37,7 @@ $pageCssFile = 'custom/css/pages/' . $currentPage . '.css';
 		})();
 	</script>
 
-		<title>ERP System</title>
+		<title>Diallo's ERP</title>
 
 	<!-- bootstrap -->
 	<link rel="stylesheet" href="assests/bootstrap/css/bootstrap.min.css">
@@ -79,20 +79,20 @@ $pageCssFile = 'custom/css/pages/' . $currentPage . '.css';
 						<img src="logo.png" alt="Simple ERP logo">
 					</span>
 						<span class="sidebar-brand__text">
-							<strong>ERP System</strong>
-							<small>Sales and inventory workspace</small>
+							<strong>Diallo's ERP</strong>
+							<small>Espace ventes, inventaire et rapports</small>
 					</span>
 				</a>
 			</div>
 
 			<div class="sidebar-nav">
 				<div class="sidebar-section">
-					<div class="sidebar-section__eyebrow">Overview</div>
+					<div class="sidebar-section__eyebrow">Vue d'ensemble</div>
 					<ul class="sidebar-menu">
 						<li id="navDashboard">
 							<a href="dashboard.php">
 								<i class="glyphicon glyphicon-list-alt"></i>
-								<span>Dashboard</span>
+								<span>Tableau de bord</span>
 							</a>
 						</li>
 					</ul>
@@ -100,30 +100,30 @@ $pageCssFile = 'custom/css/pages/' . $currentPage . '.css';
 
 				<?php if ($isAdmin) { ?>
 				<div class="sidebar-section">
-					<div class="sidebar-section__eyebrow">Catalog</div>
+					<div class="sidebar-section__eyebrow">Catalogue</div>
 					<ul class="sidebar-menu">
 						<li id="navBrand">
 							<a href="brand.php">
 								<i class="glyphicon glyphicon-btc"></i>
-								<span>Brand</span>
+								<span>Marques</span>
 							</a>
 						</li>
 						<li id="navCategories">
 							<a href="categories.php">
 								<i class="glyphicon glyphicon-th-list"></i>
-								<span>Category</span>
+								<span>Catégories</span>
 							</a>
 						</li>
 							<li id="navProduct">
 								<a href="product.php">
 									<span class="sidebar-menu__main">
 										<i class="glyphicon glyphicon-ruble"></i>
-										<span>Inventory</span>
+										<span>Inventaire</span>
 									</span>
 									<?php if ($lowStockCount > 0) { ?>
 									<span class="sidebar-menu__meta" title="<?php echo $lowStockCount; ?> inventory item(s) low on stock">
 										<span class="nav-alert-count"><?php echo $lowStockCount; ?></span>
-										<span class="low-stock-badge sidebar-low-stock-badge">Low Stock</span>
+										<span class="low-stock-badge sidebar-low-stock-badge">Stock faible</span>
 									</span>
 									<?php } ?>
 								</a>
@@ -135,19 +135,19 @@ $pageCssFile = 'custom/css/pages/' . $currentPage . '.css';
 				<div class="sidebar-section">
 					<div class="sidebar-section__eyebrow sidebar-section__eyebrow--with-icon" id="navOrder">
 						<i class="glyphicon glyphicon-shopping-cart"></i>
-							<span>Sales</span>
+							<span>Ventes</span>
 					</div>
 					<ul class="sidebar-menu sidebar-menu--nested">
 						<li id="topNavAddOrder">
 							<a href="orders.php?o=add">
 								<i class="glyphicon glyphicon-plus"></i>
-									<span>New Sale</span>
+										<span>Nouvelle vente</span>
 							</a>
 						</li>
 						<li id="topNavManageOrder">
 							<a href="orders.php?o=manord">
 								<i class="glyphicon glyphicon-edit"></i>
-									<span>Sales History</span>
+										<span>Historique des ventes</span>
 							</a>
 						</li>
 					</ul>
@@ -155,18 +155,18 @@ $pageCssFile = 'custom/css/pages/' . $currentPage . '.css';
 
 				<?php if ($isAdmin) { ?>
 				<div class="sidebar-section">
-					<div class="sidebar-section__eyebrow">Insights</div>
+					<div class="sidebar-section__eyebrow">Rapports</div>
 					<ul class="sidebar-menu">
 						<li id="navReport">
 							<a href="report.php">
 								<i class="glyphicon glyphicon-stats"></i>
-									<span>Analytics</span>
+									<span>Rapports</span>
 							</a>
 						</li>
 						<li id="importbrand">
 							<a href="importbrand.php">
 								<i class="glyphicon glyphicon-import"></i>
-								<span>Import Brand</span>
+								<span>Importer des marques</span>
 							</a>
 						</li>
 					</ul>
@@ -176,27 +176,27 @@ $pageCssFile = 'custom/css/pages/' . $currentPage . '.css';
 				<div class="sidebar-section sidebar-section--footer">
 					<div class="sidebar-section__eyebrow sidebar-section__eyebrow--with-icon" id="navSetting">
 						<i class="glyphicon glyphicon-user"></i>
-						<span>Account</span>
+						<span>Compte</span>
 					</div>
 					<ul class="sidebar-menu sidebar-menu--nested">
 						<?php if ($isAdmin) { ?>
 						<li id="topNavSetting">
 							<a href="setting.php">
 								<i class="glyphicon glyphicon-wrench"></i>
-								<span>Settings</span>
+								<span>Paramètres</span>
 							</a>
 						</li>
 						<li id="topNavUser">
 							<a href="user.php">
 								<i class="glyphicon glyphicon-briefcase"></i>
-								<span>Users</span>
+								<span>Utilisateurs</span>
 							</a>
 						</li>
 						<?php } ?>
 						<li id="topNavLogout">
 							<a href="logout.php">
 								<i class="glyphicon glyphicon-log-out"></i>
-								<span>Logout</span>
+								<span>Déconnexion</span>
 							</a>
 						</li>
 					</ul>
@@ -212,8 +212,8 @@ $pageCssFile = 'custom/css/pages/' . $currentPage . '.css';
 					<i class="fa fa-bars"></i>
 				</button>
 				<div class="app-topbar__title">
-						<h1>ERP System</h1>
-						<p>Sales, inventory, and analytics workspace</p>
+							<h1>Diallo's ERP</h1>
+							<p>Espace ventes, inventaire et rapports</p>
 				</div>
 				<div class="app-topbar__actions">
 					<button type="button" class="app-theme-toggle" id="themeToggle" aria-label="Switch to dark mode" title="Switch to dark mode">
@@ -221,7 +221,7 @@ $pageCssFile = 'custom/css/pages/' . $currentPage . '.css';
 					</button>
 					<a class="app-topbar__logout" href="logout.php">
 						<i class="glyphicon glyphicon-log-out"></i>
-						<span>Logout</span>
+							<span>Déconnexion</span>
 					</a>
 				</div>
 			</header>

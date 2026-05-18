@@ -24,11 +24,11 @@ if($_POST) {
 
 	if(empty($username) || empty($password)) {
 		if($username == "") {
-			$errors[] = "Username is required";
+				$errors[] = "Le nom d'utilisateur est obligatoire";
 		} 
 
 		if($password == "") {
-			$errors[] = "Password is required";
+				$errors[] = "Le mot de passe est obligatoire";
 		}
 	} else {
 		$stmt = $connect->prepare("SELECT user_id, password FROM users WHERE username = ?");
@@ -57,10 +57,10 @@ if($_POST) {
 				header('location:'.$store_url.'dashboard.php');
 				exit;
 			} else {
-				$errors[] = "Incorrect username/password combination";
+					$errors[] = "Nom d'utilisateur ou mot de passe incorrect";
 			}
 		} else {
-			$errors[] = "Username does not exist";
+				$errors[] = "Ce nom d'utilisateur n'existe pas";
 		}
 
 		$stmt->close();
@@ -82,7 +82,7 @@ if($_POST) {
 			}
 		})();
 	</script>
-		<title>ERP System</title>
+		<title>Diallo's ERP</title>
 
 	<!-- bootstrap -->
 	<link rel="stylesheet" href="assests/bootstrap/css/bootstrap.min.css">
@@ -114,7 +114,7 @@ if($_POST) {
 			<div class="col-md-5 col-md-offset-4">
 				<div class="panel panel-info login-panel">
 						<div class="panel-heading">
-							<h3 class="panel-title">Sign in to ERP System</h3>
+							<h3 class="panel-title">Connexion à Diallo's ERP</h3>
 					</div>
 					<div class="panel-body">
 
@@ -131,20 +131,20 @@ if($_POST) {
 						<form class="form-horizontal" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" id="loginForm">
 							<fieldset>
 							  <div class="form-group">
-									<label for="username" class="col-sm-2 control-label">Username</label>
+									<label for="username" class="col-sm-2 control-label">Nom d'utilisateur</label>
 									<div class="col-sm-10">
-									  <input type="text" class="form-control" id="username" name="username" placeholder="Username" autocomplete="off" />
+										  <input type="text" class="form-control" id="username" name="username" placeholder="Nom d'utilisateur" autocomplete="off" />
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="password" class="col-sm-2 control-label">Password</label>
+									<label for="password" class="col-sm-2 control-label">Mot de passe</label>
 									<div class="col-sm-10">
-									  <input type="password" class="form-control" id="password" name="password" placeholder="Password" autocomplete="off" />
+										  <input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe" autocomplete="off" />
 									</div>
 								</div>								
 								<div class="form-group">
 									<div class="col-sm-offset-2 col-sm-10">
-									  <button type="submit" class="btn btn-default"> <i class="glyphicon glyphicon-log-in"></i> Sign in</button>
+										  <button type="submit" class="btn btn-default"> <i class="glyphicon glyphicon-log-in"></i> Se connecter</button>
 									</div>
 								</div>
 							</fieldset>

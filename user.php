@@ -5,26 +5,26 @@
 	<div class="col-md-12">
 
 		<ol class="breadcrumb">
-		  <li><a href="dashboard.php">Home</a></li>		  
-		  <li class="active">User</li>
+			  <li><a href="dashboard.php">Accueil</a></li>		  
+			  <li class="active">Utilisateurs</li>
 		</ol>
 
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<div class="page-heading"> <i class="glyphicon glyphicon-edit"></i> Manage User</div>
+					<div class="page-heading"> <i class="glyphicon glyphicon-edit"></i> Gérer les utilisateurs</div>
 			</div> <!-- /panel-heading -->
 			<div class="panel-body">
 
 				<div class="remove-messages"></div>
 
 				<div class="div-action page-actions pull pull-right">
-					<button class="btn btn-default button1" data-toggle="modal" id="addUserModalBtn" data-target="#addUserModal"> <i class="glyphicon glyphicon-plus-sign"></i> Add User </button>
+						<button class="btn btn-default button1" data-toggle="modal" id="addUserModalBtn" data-target="#addUserModal"> <i class="glyphicon glyphicon-plus-sign"></i> Ajouter un utilisateur </button>
 				</div> <!-- /div-action -->				
 				
 				<table class="table" id="manageUserTable">
 					<thead>
 						<tr>
-							<th>User Name</th>
+								<th>Nom d'utilisateur</th>
 							<th>Options</th>
 						</tr>
 					</thead>
@@ -45,7 +45,7 @@
     	<form class="form-horizontal" id="submitUserForm" action="php_action/createUser.php" method="POST" enctype="multipart/form-data">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title"><i class="fa fa-plus"></i> Add User</h4>
+		        <h4 class="modal-title"><i class="fa fa-plus"></i> Ajouter un utilisateur</h4>
 	      </div>
 
 	      <div class="modal-body user-modal-body">
@@ -55,18 +55,18 @@
 	      		     	           	       
 
 	        <div class="form-group">
-	        	<label for="userName" class="col-sm-3 control-label">User Name: </label>
+		        	<label for="userName" class="col-sm-3 control-label">Nom d'utilisateur : </label>
 	        	
 				    <div class="col-sm-8">
-				      <input type="text" class="form-control" id="userName" placeholder="User Name" name="userName" autocomplete="off">
+					      <input type="text" class="form-control" id="userName" placeholder="Nom d'utilisateur" name="userName" autocomplete="off">
 				    </div>
 	        </div> <!-- /form-group-->	    
 
 	        <div class="form-group">
-	        	<label for="upassword" class="col-sm-3 control-label">Password: </label>
+		        	<label for="upassword" class="col-sm-3 control-label">Mot de passe : </label>
 	        	
 				    <div class="col-sm-8">
-				      <input type="password" class="form-control" id="upassword" placeholder="Password" name="upassword" autocomplete="off">
+					      <input type="password" class="form-control" id="upassword" placeholder="Mot de passe" name="upassword" autocomplete="off">
 				    </div>
 	        </div> <!-- /form-group-->	        	 
 
@@ -81,9 +81,9 @@
 	      </div> <!-- /modal-body -->
 	      
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal"> <i class="glyphicon glyphicon-remove-sign"></i> Close</button>
+		        <button type="button" class="btn btn-default" data-dismiss="modal"> <i class="glyphicon glyphicon-remove-sign"></i> Fermer</button>
 	        
-	        <button type="submit" class="btn btn-primary" id="createUserBtn" data-loading-text="Loading..." autocomplete="off"> <i class="glyphicon glyphicon-ok-sign"></i> Save Changes</button>
+		        <button type="submit" class="btn btn-primary" id="createUserBtn" data-loading-text="Chargement..." autocomplete="off"> <i class="glyphicon glyphicon-ok-sign"></i> Enregistrer</button>
 	      </div> <!-- /modal-footer -->	      
      	</form> <!-- /.form -->	     
     </div> <!-- /modal-content -->    
@@ -99,20 +99,20 @@
     	    	
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title"><i class="fa fa-edit"></i> Edit User</h4>
+		        <h4 class="modal-title"><i class="fa fa-edit"></i> Modifier l'utilisateur</h4>
 	      </div>
 	      <div class="modal-body user-modal-body">
 
 	      	<div class="div-loading">
 	      		<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
-						<span class="sr-only">Loading...</span>
+							<span class="sr-only">Chargement...</span>
 	      	</div>
 
 	      	<div class="div-result">
 
 				  <!-- Nav tabs -->
 				  <ul class="nav nav-tabs" role="tablist">
-				    <li role="presentation" class="active"><a href="#userInfo" aria-controls="profile" role="tab" data-toggle="tab">User Info</a></li>    
+					    <li role="presentation" class="active"><a href="#userInfo" aria-controls="profile" role="tab" data-toggle="tab">Informations utilisateur</a></li>    
 				  </ul>
 
 				  <!-- Tab panes -->
@@ -128,18 +128,18 @@
 				    	<div id="edit-user-messages"></div>
 
 				    	<div class="form-group">
-			        		<label for="edituserName" class="col-sm-3 control-label">User Name: </label>
+				        		<label for="edituserName" class="col-sm-3 control-label">Nom d'utilisateur : </label>
 			        	
 						    <div class="col-sm-8">
-						      <input type="text" class="form-control" id="edituserName" placeholder="User Name" name="edituserName" autocomplete="off">
+							      <input type="text" class="form-control" id="edituserName" placeholder="Nom d'utilisateur" name="edituserName" autocomplete="off">
 						    </div>
 			        	</div> <!-- /form-group-->	    
 
 				        <div class="form-group">
-				        	<label for="editPassword" class="col-sm-3 control-label">Password: </label>
+					        	<label for="editPassword" class="col-sm-3 control-label">Mot de passe : </label>
 				        	
 							    <div class="col-sm-8">
-							      <input type="password" class="form-control" id="editPassword" placeholder="Password" name="editPassword" autocomplete="off">
+								      <input type="password" class="form-control" id="editPassword" placeholder="Mot de passe" name="editPassword" autocomplete="off">
 							    </div>
 				        </div> <!-- /form-group-->	        	 
 
@@ -147,9 +147,9 @@
          	        
 
 			        <div class="modal-footer editUserFooter">
-				        <button type="button" class="btn btn-default" data-dismiss="modal"> <i class="glyphicon glyphicon-remove-sign"></i> Close</button>
+					        <button type="button" class="btn btn-default" data-dismiss="modal"> <i class="glyphicon glyphicon-remove-sign"></i> Fermer</button>
 				        
-				        <button type="submit" class="btn btn-success" id="editProductBtn" data-loading-text="Loading..."> <i class="glyphicon glyphicon-ok-sign"></i> Save Changes</button>
+					        <button type="submit" class="btn btn-success" id="editProductBtn" data-loading-text="Chargement..."> <i class="glyphicon glyphicon-ok-sign"></i> Enregistrer</button>
 				      </div> <!-- /modal-footer -->				     
 			        </form> <!-- /.form -->				     	
 				    </div>    
@@ -174,17 +174,17 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title"><i class="glyphicon glyphicon-trash"></i> Remove User</h4>
+	        <h4 class="modal-title"><i class="glyphicon glyphicon-trash"></i> Supprimer l'utilisateur</h4>
       </div>
       <div class="modal-body">
 
       	<div class="removeUserMessages"></div>
 
-        <p>Do you really want to remove ?</p>
+	        <p>Voulez-vous vraiment supprimer cet utilisateur ?</p>
       </div>
       <div class="modal-footer removeProductFooter">
-        <button type="button" class="btn btn-default" data-dismiss="modal"> <i class="glyphicon glyphicon-remove-sign"></i> Close</button>
-        <button type="button" class="btn btn-primary" id="removeProductBtn" data-loading-text="Loading..."> <i class="glyphicon glyphicon-ok-sign"></i> Save changes</button>
+	        <button type="button" class="btn btn-default" data-dismiss="modal"> <i class="glyphicon glyphicon-remove-sign"></i> Fermer</button>
+	        <button type="button" class="btn btn-primary" id="removeProductBtn" data-loading-text="Chargement..."> <i class="glyphicon glyphicon-ok-sign"></i> Supprimer</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

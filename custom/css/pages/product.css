@@ -24,3 +24,33 @@
   height: 250px;
   object-fit: cover;
 }
+
+/* ─── Low stock row highlight ─── */
+.page-product #manageProductTable tbody tr.low-stock-row > td {
+  background-color: #faf5ed !important;
+  border-left: 3px solid #92600a;
+}
+
+[data-theme="dark"] .page-product #manageProductTable tbody tr.low-stock-row > td {
+  background-color: rgba(146, 96, 10, 0.12) !important;
+  border-left: 3px solid #c8a060;
+}
+
+/* ─── Low stock inline badge ─── */
+.low-stock-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background-color: #faf5ed !important;
+  color: #92600a !important;
+  border: 1px solid #e0cfac;
+  vertical-align: middle;
+  margin-left: 4px;
+}
+
+[data-theme="dark"] .low-stock-badge {
+  background-color: rgba(146, 96, 10, 0.2) !important;
+  color: #c8a060 !important;
+  border-color: rgba(146, 96, 10, 0.4);
+}

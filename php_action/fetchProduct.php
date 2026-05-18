@@ -56,6 +56,12 @@ if($result->num_rows > 0) {
 	$imageUrl = substr($row[2], 3);
 	$productImage = "<img class='img-round' src='".$imageUrl."' style='height:30px; width:50px;'  />";
 
+	$qty = (int)$row[5];
+	$qtyDisplay = $qty;
+	if ($qty < 10) {
+		$qtyDisplay = $qty . " <span class='label label-warning low-stock-badge'><i class=\"glyphicon glyphicon-warning-sign\"></i> Low</span>";
+	}
+
  	$output['data'][] = array( 		
  		// image
  		$productImage,
@@ -64,7 +70,7 @@ if($result->num_rows > 0) {
  		// rate
  		$row[6],
  		// quantity 
- 		$row[5], 		 	
+ 		$qtyDisplay, 		 	
  		// brand
  		$brand,
  		// category 		

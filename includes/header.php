@@ -2,6 +2,15 @@
 <?php
 $isAdmin = isset($_SESSION['userId']) && (int) $_SESSION['userId'] === 1;
 $currentPage = basename($_SERVER['PHP_SELF'], '.php');
+
+// Low-stock count for sidebar badge (shown to admin only)
+$lowStockCount = 0;
+if ($isAdmin) {
+	$lowStockResult = $connect->query("SELECT COUNT(*) as cnt FROM product WHERE quantity < 10 AND status = 1");
+	if ($lowStockResult) {
+		$lowStockCount = (int) $lowStockResult->fetch_assoc()['cnt'];
+	}
+}
 $sharedCssFiles = array(
 	'custom/css/shared/variables.css',
 	'custom/css/shared/base.css',
@@ -109,6 +118,9 @@ $pageCssFile = 'custom/css/pages/' . $currentPage . '.css';
 							<a href="product.php">
 								<i class="glyphicon glyphicon-ruble"></i>
 								<span>Product</span>
+								<?php if ($lowStockCount > 0) { ?>
+								<span class="sidebar-badge sidebar-badge--warning" title="<?php echo $lowStockCount; ?> item(s) low on stock"><?php echo $lowStockCount; ?></span>
+								<?php } ?>
 							</a>
 						</li>
 					</ul>

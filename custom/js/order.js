@@ -510,7 +510,12 @@ function getProductData(row = null) {
 					$("#rateValue"+row).val(response.rate);
 
 					$("#quantity"+row).val(1);
-					$("#available_quantity"+row).text(response.quantity);
+					var availQty = parseInt(response.quantity, 10);
+					var qtyHtml = response.quantity;
+					if (!isNaN(availQty) && availQty < 10) {
+						qtyHtml += ' <span class="label label-warning low-stock-badge" style="font-size:11px;padding:2px 6px;border-radius:4px;"><i class="glyphicon glyphicon-warning-sign"></i> Low Stock</span>';
+					}
+					$("#available_quantity"+row).html(qtyHtml);
 
 					var total = Number(response.rate) * 1;
 					total = total.toFixed(2);

@@ -6,7 +6,15 @@ $(document).ready(function() {
 	// manage product data table
 	manageProductTable = $('#manageProductTable').DataTable({
 		'ajax': 'php_action/fetchProduct.php',
-		'order': []
+		'order': [],
+		'createdRow': function(row, data, dataIndex) {
+			// data[3] is the quantity column (may contain HTML badge)
+			var qtyText = $('<div>').html(data[3]).text().trim();
+			var qty = parseInt(qtyText, 10);
+			if (!isNaN(qty) && qty < 10) {
+				$(row).addClass('low-stock-row');
+			}
+		}
 	});
 
 	// add product modal btn clicked
